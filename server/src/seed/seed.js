@@ -17,8 +17,11 @@ import {
 } from '../utils/dates.js';
 
 export const seedDatabase = async () => {
-  console.log('[Seed] Connecting to MongoDB at', env.MONGODB_URI);
-  await mongoose.connect(env.MONGODB_URI);
+  console.log('[Seed] Connecting to MongoDB at', env.MONGODB_URI.replace(/:([^:@]+)@/, ':****@'));
+  await mongoose.connect(env.MONGODB_URI, {
+    dbName: 'tiffinloop',
+    serverSelectionTimeoutMS: 10000,
+  });
 
   console.log('[Seed] Wiping existing collections...');
   await Promise.all([
