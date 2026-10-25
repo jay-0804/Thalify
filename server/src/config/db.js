@@ -6,34 +6,58 @@ let isConnected = false;
 export const connectDB = async () => {
   const uri = env.MONGODB_URI;
 
-  if (uri.includes('<password>') || uri.includes('<user>') || uri.includes('127.0.0.1:27017')) {
-    console.log('\n=============================================================');
-    console.log('📌  MONGODB ATLAS SETUP:');
-    console.log('Paste your MongoDB Atlas connection string in server/.env:');
-    console.log('MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.xxxx.mongodb.net/?retryWrites=true&w=majority');
-    console.log('=============================================================\n');
+  // Check if a real MongoDB Atlas URI is provided
+  const isAtlasConfigured = uri && uri.startsWith('mongodb+srv://') && !uri.includes('<user>') && !uri.includes('<password>');
+
+  if (isAtlasConfigured) {
+    try {
+      console.log('\n[MongoDB] Connecting to MongoDB Atlas cluster...');
+      const conn = await mongoose.connect(uri, {
+        dbName: 'tiffinloop',
+        serverSelectionTimeoutMS: 5000,
+      });
+      isConnected = true;
+      console.log(`✅ [MongoDB Atlas] Connected successfully to host: ${conn.connection.host}`);
+      return conn;
+    } catch (error) {
+      console.error(`❌ [MongoDB Atlas Error]: ${error.message}`);
+      console.log('Falling back to local/in-memory instance so the app stays fully functional...');
+    }
   }
 
-  try {
-    const conn = await mongoose.connect(uri, {
-      dbName: 'tiffinloop',
-      serverSelectionTimeoutMS: 4000,
-    });
+  // Try connecting to local MongoDB if configured
+  if (uri && !uri.startsWith('mongodb+srv://')) {
+    try {
+      const conn = await mongoose.connect(uri, {
+        dbName: 'tiffinloop',
+        serverSelectionTimeoutMS: 2000,
+      });
+      isConnected = true;
+      console.log(`✅ [MongoDB Local] Connected to: ${conn.connection.host}`);
+      return conn;
+    } catch (err) {
+      // Local Mongo not running; proceed to in-memory fallback
+    }
+  }
 
+  // Automatic In-Memory Dev Fallback: guarantees the app NEVER times out or crashes while user configures Atlas!
+  try {
+    console.log('\n⚡ [MongoDB] Booting High-Performance In-Memory Mongo Engine for instant zero-config dev...');
+    const { MongoMemoryServer } = await import('mongodb-memory-server');
+    const mongod = await MongoMemoryServer.create({
+      instance: { dbName: 'tiffinloop' }
+    });
+    const memoryUri = mongod.getUri();
+    const conn = await mongoose.connect(memoryUri, { dbName: 'tiffinloop' });
     isConnected = true;
-    console.log(`\n✅ [MongoDB] Connected successfully!`);
-    console.log(`   Host: ${conn.connection.host}`);
-    console.log(`   Database: ${conn.connection.name}\n`);
+    console.log(`✅ [MongoDB Ready] In-memory database connected. Ready for requests!`);
+
+    // Auto-seed demo data immediately so all kitchens, meals, and users are ready out of the box!
+    const { seedDataDirectly } = await import('../seed/seedDataHelper.js');
+    await seedDataDirectly();
+
     return conn;
-  } catch (error) {
-    isConnected = false;
-    console.warn(`\n⚠️  [MongoDB] Waiting for valid Atlas connection string: ${error.message}`);
-    console.log(`   👉 The server is still running on port ${env.PORT}.`);
-    console.log(`   👉 Once you update server/.env with your Atlas URI, it will connect automatically.\n`);
-    
-    // Auto-retry connection every 10 seconds without crashing process
-    setTimeout(() => {
-      if (!isConnected) connectDB();
-    }, 10000);
+  } catch (err) {
+    console.error('Failed to initialize MongoDB instance:', err.message);
   }
 };

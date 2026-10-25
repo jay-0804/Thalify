@@ -4,7 +4,6 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { SocketProvider } from './context/SocketContext.jsx';
 
-import DemoBar from './components/DemoBar.jsx';
 import Navbar from './components/Navbar.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
@@ -35,13 +34,10 @@ export const App = () => {
       <AuthProvider>
         <SocketProvider>
           <div className="min-h-screen flex flex-col bg-canvas text-mocha-950 font-sans selection:bg-amber-100 selection:text-amber-800">
-            {/* Top Evaluator Quick-Switch Bar */}
-            <DemoBar />
-
-            {/* Navigation Header */}
+            {/* Professional Navigation Header with Role Badge */}
             <Navbar />
 
-            {/* Main Content Area */}
+            {/* Main Application Content */}
             <main className="flex-1">
               <Routes>
                 {/* Public & Auth Routes */}
@@ -80,6 +76,35 @@ export const App = () => {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
+
+            {/* Premium Culinary Footer */}
+            <footer className="bg-mocha-950 text-mocha-200 border-t border-mocha-800 py-10 px-4 sm:px-6 lg:px-8 mt-16 print:hidden">
+              <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs">
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">🍱</span>
+                  <div>
+                    <span className="text-lg font-serif font-bold text-white tracking-tight">
+                      Tiffin<span className="text-amber-500">Loop</span>
+                    </span>
+                    <p className="text-mocha-400 text-[11px]">
+                      Mess & Daily Tiffin Subscription Manager • Cutoff-Enforced Daily Meals
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-6 text-mocha-400">
+                  <span>Server-Enforced Skip Cutoffs</span>
+                  <span>•</span>
+                  <span>Zero Food Waste Headcount</span>
+                  <span>•</span>
+                  <span>Derived Billing Ledger</span>
+                </div>
+
+                <div className="text-mocha-400 text-right">
+                  <p>© {new Date().getFullYear()} TiffinLoop. All rights reserved.</p>
+                </div>
+              </div>
+            </footer>
 
             {/* Toast System with warm palette accents */}
             <Toaster

@@ -12,7 +12,7 @@ initSockets(server);
 
 // Start HTTP server immediately so port 5000 is active
 const start = async () => {
-  server.listen(env.PORT, () => {
+  server.listen(env.PORT, '0.0.0.0', () => {
     console.log(`[TiffinLoop] 🍱 Server running in ${env.NODE_ENV} mode on port ${env.PORT}`);
     console.log(`[TiffinLoop] 🚀 Health check: http://localhost:${env.PORT}/api/health`);
   });
