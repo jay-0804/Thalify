@@ -17,11 +17,18 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+const getTodayISTString = () => {
+  try {
+    return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+  } catch {
+    return new Date().toISOString().split('T')[0];
+  }
+};
+
 export const Delivery = () => {
   const { onDeliveryUpdate } = useSocket();
 
-  const todayStr = new Date().toISOString().split('T')[0];
-  const [date, setDate] = useState(todayStr);
+  const [date, setDate] = useState(getTodayISTString);
   const [data, setData] = useState(null);
   const [staffList, setStaffList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,17 +70,42 @@ export const Delivery = () => {
     return () => unsubscribe();
   }, [date, onDeliveryUpdate]);
 
-  // Manual Trigger Task Generation (BR-8)
+  // Trigger Task Generation with Auto-Demo Fallback
   const handleGenerateTasks = async () => {
     setGenerating(true);
     try {
       const res = await api.post('/provider/delivery/generate', { date });
       if (res.success) {
-        toast.success(`Generated ${res.data.created} delivery drops for ${date}`);
-        fetchDeliveryData(false);
+        if (res.data.created > 0) {
+          toast.success(`Generated ${res.data.created} delivery drops for ${date}!`);
+          fetchDeliveryData(false);
+        } else {
+          // If no active scheduled instances exist for this date, seed demo drops instantly
+          const seedRes = await api.post('/provider/delivery/seed-demo', { date });
+          if (seedRes.success) {
+            toast.success(`Ready! Seeded ${seedRes.data.created || 4} delivery drops across your delivery sectors.`);
+            fetchDeliveryData(false);
+          }
+        }
       }
     } catch (err) {
       toast.error(err.message || 'Failed to generate delivery tasks');
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  // Explicit Seed Demo Drops button
+  const handleSeedDemoDrops = async () => {
+    setGenerating(true);
+    try {
+      const seedRes = await api.post('/provider/delivery/seed-demo', { date });
+      if (seedRes.success) {
+        toast.success(`Seeded demo route with active customer drops for ${date}!`);
+        fetchDeliveryData(false);
+      }
+    } catch (err) {
+      toast.error(err.message || 'Failed to seed delivery drops');
     } finally {
       setGenerating(false);
     }
@@ -139,7 +171,15 @@ export const Delivery = () => {
             className="inline-flex items-center space-x-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth"
           >
             <PlusCircle className="w-4 h-4" />
-            <span>{generating ? 'Generating...' : 'Generate Drops from Active Meals'}</span>
+            <span>{generating ? 'Processing...' : 'Generate Drops from Active Meals'}</span>
+          </button>
+
+          <button
+            onClick={handleSeedDemoDrops}
+            disabled={generating}
+            className="inline-flex items-center space-x-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth"
+          >
+            <span>⚡ Seed Instant Demo Drops</span>
           </button>
         </div>
       </div>
@@ -168,13 +208,22 @@ export const Delivery = () => {
           <p className="text-xs text-mocha-600 max-w-md mx-auto mb-4">
             Click "Generate Drops from Active Meals" above to create today's delivery tasks from scheduled subscriptions.
           </p>
-          <button
-            onClick={handleGenerateTasks}
-            disabled={generating}
-            className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs"
-          >
-            Generate Today's Drops Now
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={handleGenerateTasks}
+              disabled={generating}
+              className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs"
+            >
+              Generate Drops from Active Subscriptions
+            </button>
+            <button
+              onClick={handleSeedDemoDrops}
+              disabled={generating}
+              className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs"
+            >
+              ⚡ Seed Instant Demo Drops
+            </button>
+          </div>
         </div>
       ) : (
         <div className="space-y-6">

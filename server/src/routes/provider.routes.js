@@ -22,6 +22,7 @@ import {
 } from '../controllers/billing.controller.js';
 import {
   triggerGenerateTasks,
+  seedDemoDrops,
   getProviderDeliveryTasks,
   assignStaff,
 } from '../controllers/delivery.controller.js';
@@ -75,6 +76,7 @@ router.get('/prep', getPrepSummary);
 
 // Delivery Dispatch
 router.post('/delivery/generate', triggerGenerateTasks);
+router.post('/delivery/seed-demo', seedDemoDrops);
 router.get('/delivery', getProviderDeliveryTasks);
 router.post('/delivery/assign', validate({ body: assignDeliverySchema }), assignStaff);
 
