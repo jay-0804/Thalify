@@ -75,12 +75,12 @@ export const Register = () => {
             🍱
           </div>
           <h2 className="text-3xl font-serif font-extrabold text-mocha-950">
-            {role === 'provider' ? 'Partner As a Kitchen / Mess' : 'Join TiffinLoop'}
+            {role === 'provider' ? 'Partner As a Kitchen / Mess' : 'Join Thalify'}
           </h2>
           <p className="text-xs text-mocha-600">
             {role === 'provider'
               ? 'Onboard your home kitchen to start receiving daily meal subscribers'
-              : 'Create an account to browse neighborhood home kitchens and start your meal subscription'}
+              : 'Your daily meals, on your terms. Browse neighborhood home kitchens & start your subscription.'}
           </p>
         </div>
 

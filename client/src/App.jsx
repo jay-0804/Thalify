@@ -87,10 +87,10 @@ export const App = () => {
                   <span className="text-2xl">🍱</span>
                   <div>
                     <span className="text-lg font-serif font-bold text-white tracking-tight">
-                      Tiffin<span className="text-amber-500">Loop</span>
+                      Thali<span className="text-amber-500">fy</span>
                     </span>
                     <p className="text-mocha-400 text-[11px]">
-                      Mess & Daily Tiffin Subscription Manager • Cutoff-Enforced Daily Meals
+                      Your daily meals, on your terms.
                     </p>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ export const App = () => {
                 </div>
 
                 <div className="text-mocha-400 text-right">
-                  <p>© {new Date().getFullYear()} TiffinLoop. All rights reserved.</p>
+                  <p>© {new Date().getFullYear()} Thalify. All rights reserved.</p>
                 </div>
               </div>
             </footer>

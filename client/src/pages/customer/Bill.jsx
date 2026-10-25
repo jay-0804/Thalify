@@ -222,10 +222,10 @@ export const Bill = () => {
             <div className="flex items-center space-x-2">
               <span className="text-2xl">🍱</span>
               <span className="text-2xl font-serif font-extrabold text-mocha-950">
-                Tiffin<span className="text-amber-600">Loop</span>
+                Thali<span className="text-amber-600">fy</span>
               </span>
             </div>
-            <p className="text-xs text-mocha-500 mt-1">Official Mess & Subscription Tax Invoice</p>
+            <p className="text-xs text-mocha-500 mt-1">Official Mess & Subscription Tax Invoice • Your daily meals, on your terms.</p>
             <div className="mt-3 text-xs text-mocha-700 space-y-0.5">
               <p className="font-bold text-mocha-900">Provider: {subscription.providerId?.businessName}</p>
               <p>Contact: {subscription.providerId?.contactPhone || 'N/A'}</p>
@@ -378,7 +378,7 @@ export const Bill = () => {
 
         {/* Invoice Footer */}
         <div className="pt-6 border-t border-mocha-200 text-center text-xs text-mocha-500">
-          <p>TiffinLoop • Mess & Tiffin Subscription Manager • Certified System Generated Bill</p>
+          <p>Thalify • Your daily meals, on your terms. • Certified System Generated Bill</p>
         </div>
       </div>
 

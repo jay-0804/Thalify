@@ -36,13 +36,13 @@ export const LandingPage = () => {
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-gold-500/20 text-gold-300 border border-gold-500/40 text-xs font-semibold backdrop-blur-md">
               <Sparkles className="w-4 h-4 text-gold-400" />
-              <span>Next-Gen Homestyle Mess & Tiffin Subscription Manager</span>
+              <span>Thalify • The Smart Mess & Tiffin Ecosystem</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight leading-tight">
-              Delicious Daily Meals.{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-gold-400">
-                Zero WhatsApp Chaos.
+              Thalify.{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-gold-400 block sm:inline">
+                Your daily meals, on your terms.
               </span>
             </h1>
 
@@ -242,7 +242,7 @@ export const LandingPage = () => {
               Simplicity First
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-mocha-950">
-              How TiffinLoop Works
+              How Thalify Works
             </h2>
             <p className="text-xs sm:text-sm text-mocha-600">
               Designed to solve the daily headache of meal planning, billing disputes, and wasted food
@@ -320,7 +320,7 @@ export const LandingPage = () => {
               </h2>
 
               <p className="text-mocha-200 text-xs sm:text-sm leading-relaxed max-w-2xl">
-                Tired of losing 30% commission to food delivery apps? TiffinLoop gives you a complete operating system built specifically for daily subscribers: automated headcounts before grocery shopping, zero-dispute billing, and delivery dispatch.
+                Tired of losing 30% commission to food delivery apps? Thalify gives you a complete operating system built specifically for daily subscribers: automated headcounts before grocery shopping, zero-dispute billing, and delivery dispatch.
               </p>
 
               {/* Partner Benefits Grid */}

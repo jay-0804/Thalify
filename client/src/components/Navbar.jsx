@@ -41,10 +41,10 @@ export const Navbar = () => {
             </div>
             <div>
               <span className="text-xl font-serif font-extrabold tracking-tight text-mocha-950">
-                Tiffin<span className="text-amber-600">Loop</span>
+                Thali<span className="text-amber-600">fy</span>
               </span>
-              <span className="hidden sm:block text-[10px] tracking-widest uppercase font-semibold text-gold-600">
-                Mess & Meal Manager
+              <span className="hidden sm:block text-[10px] tracking-wide font-medium text-gold-700">
+                Your daily meals, on your terms.
               </span>
             </div>
           </Link>

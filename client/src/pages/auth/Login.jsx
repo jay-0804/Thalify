@@ -40,10 +40,10 @@ export const Login = () => {
             🍱
           </div>
           <h2 className="text-3xl font-serif font-extrabold text-mocha-950">
-            Sign In to TiffinLoop
+            Sign In to Thalify
           </h2>
           <p className="text-xs text-mocha-600">
-            Access your personalized meal calendar, kitchen portal, or delivery route
+            Your daily meals, on your terms.
           </p>
         </div>
 
@@ -135,7 +135,7 @@ export const Login = () => {
         </div>
 
         <div className="text-center text-xs text-mocha-600 pt-2">
-          New to TiffinLoop?{' '}
+          New to Thalify?{' '}
           <Link to="/register" className="font-bold text-amber-700 hover:underline">
             Create an Account
           </Link>

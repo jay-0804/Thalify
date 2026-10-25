@@ -385,14 +385,14 @@ export const Providers = () => {
           )}
         </div>
 
-        {/* "Why TiffinLoop" - Interactive Visual Comparison Section */}
+        {/* "Why Thalify" - Interactive Visual Comparison Section */}
         <section className="bg-canvas-subtle/80 rounded-3xl border border-mocha-200/80 p-8 sm:p-12 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="text-3xl font-serif font-extrabold text-mocha-950">
               The Smarter Way to Eat Daily
             </h2>
             <p className="text-xs sm:text-sm text-mocha-600">
-              Compare the traditional mess experience against TiffinLoop's guaranteed software workflow
+              Compare the traditional mess experience against Thalify's guaranteed software workflow
             </p>
           </div>
 
@@ -418,10 +418,10 @@ export const Providers = () => {
               </ul>
             </div>
 
-            {/* The TiffinLoop Way */}
+            {/* The Thalify Way */}
             <div className="bg-white p-6 rounded-2xl border border-emerald-300 shadow-sm space-y-4">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                ✅ With TiffinLoop
+                ✅ With Thalify
               </span>
               <ul className="space-y-3 text-xs text-mocha-900">
                 <li className="flex items-start space-x-2">

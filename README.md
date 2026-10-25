@@ -1,4 +1,4 @@
-# TiffinLoop: Mess & Tiffin Subscription Manager
+# Thalify: Your daily meals, on your terms.
 
 > **One-Line Pitch:** A high-reliability subscription management platform for tiffin services, PG messes, and daily meal subscribers that eliminates notebook disputes through server-authoritative cutoff enforcement, derived billing, and real-time kitchen prep orchestration.
 
@@ -31,7 +31,7 @@ This status-quo causes three recurring points of failure:
 | **WhatsApp + Notebook (Status Quo)** | Zero onboarding cost; universally adopted communication tool | No cutoff enforcement; prone to late-night arguments; zero automated headcount aggregation; no delivery verification audit trail. | Industry field interviews with Bengaluru PG messes (Koramangala, Whitefield) |
 | **Generic Invoicing Apps (Vyapar / Khatabook)** | General ledger recording, PDF invoices | Not meal-schedule aware; cannot enforce skip deadlines prior to cooking; zero kitchen prep aggregation or delivery assignment workflow. | [Vyapar App Features](https://vyaparapp.in), [Khatabook Merchant Terms](https://khatabook.com) |
 
-**Our Differentiator:** TiffinLoop enforces **server-side cutoff validation in IST**, guarantees **mathematically derived billing** directly from materialized meal instances, and gives kitchen owners a **real-time headcount prep engine** connected live via WebSockets.
+**Our Differentiator:** Thalify enforces **server-side cutoff validation in IST**, guarantees **mathematically derived billing** directly from materialized meal instances, and gives kitchen owners a **real-time headcount prep engine** connected live via WebSockets.
 
 ---
 
