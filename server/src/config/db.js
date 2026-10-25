@@ -1,34 +1,39 @@
 import mongoose from 'mongoose';
 import { env } from './env.js';
 
+let isConnected = false;
+
 export const connectDB = async () => {
   const uri = env.MONGODB_URI;
 
-  if (uri.includes('<password>') || uri.includes('<user>')) {
-    console.error('\n=============================================================');
-    console.error('⚠️  MONGODB ATLAS CONFIGURATION NOTICE:');
-    console.error('It looks like your MONGODB_URI in server/.env still has placeholder text.');
-    console.error('Please open server/.env and replace <user> and <password> with your actual MongoDB Atlas database credentials.');
-    console.error('=============================================================\n');
+  if (uri.includes('<password>') || uri.includes('<user>') || uri.includes('127.0.0.1:27017')) {
+    console.log('\n=============================================================');
+    console.log('📌  MONGODB ATLAS SETUP:');
+    console.log('Paste your MongoDB Atlas connection string in server/.env:');
+    console.log('MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.xxxx.mongodb.net/?retryWrites=true&w=majority');
+    console.log('=============================================================\n');
   }
 
   try {
     const conn = await mongoose.connect(uri, {
-      dbName: 'tiffinloop', // Ensures data is stored in the tiffinloop database even if omitted in connection string
-      serverSelectionTimeoutMS: 8000,
+      dbName: 'tiffinloop',
+      serverSelectionTimeoutMS: 4000,
     });
 
-    console.log(`\n✅ [MongoDB Atlas] Connected successfully!`);
+    isConnected = true;
+    console.log(`\n✅ [MongoDB] Connected successfully!`);
     console.log(`   Host: ${conn.connection.host}`);
     console.log(`   Database: ${conn.connection.name}\n`);
     return conn;
   } catch (error) {
-    console.error('\n❌ [MongoDB Atlas Connection Error]:', error.message);
-    console.error('\nTroubleshooting Checklist:');
-    console.error('1. Atlas Network Access: Go to MongoDB Atlas -> Network Access -> Add IP Address -> Select "Allow Access from Anywhere" (0.0.0.0/0).');
-    console.error('2. Database User: Ensure your Database User exists under "Database Access" and has Read/Write permissions.');
-    console.error('3. Special Characters: If your password has special characters like @, #, $, ensure it is URL-encoded or create a password with only alphanumeric characters.');
-    console.error('4. server/.env: Check that MONGODB_URI is saved properly.\n');
-    process.exit(1);
+    isConnected = false;
+    console.warn(`\n⚠️  [MongoDB] Waiting for valid Atlas connection string: ${error.message}`);
+    console.log(`   👉 The server is still running on port ${env.PORT}.`);
+    console.log(`   👉 Once you update server/.env with your Atlas URI, it will connect automatically.\n`);
+    
+    // Auto-retry connection every 10 seconds without crashing process
+    setTimeout(() => {
+      if (!isConnected) connectDB();
+    }, 10000);
   }
 };

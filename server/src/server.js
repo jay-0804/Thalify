@@ -10,15 +10,15 @@ const server = http.createServer(app);
 // Initialize WebSocket server
 initSockets(server);
 
-// Start server
+// Start HTTP server immediately so port 5000 is active
 const start = async () => {
-  await connectDB();
-  initCronJobs();
-
   server.listen(env.PORT, () => {
     console.log(`[TiffinLoop] 🍱 Server running in ${env.NODE_ENV} mode on port ${env.PORT}`);
     console.log(`[TiffinLoop] 🚀 Health check: http://localhost:${env.PORT}/api/health`);
   });
+
+  initCronJobs();
+  await connectDB();
 };
 
 if (process.env.NODE_ENV !== 'test') {
