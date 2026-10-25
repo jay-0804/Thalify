@@ -1,23 +1,42 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
 import { env } from './env.js';
 
 let isConnected = false;
+
+// Ensure reliable SRV DNS resolution for MongoDB Atlas on Windows environments
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch {
+  // Use default DNS if setServers is restricted
+}
 
 export const connectDB = async () => {
   const uri = env.MONGODB_URI;
 
   // Check if a real MongoDB Atlas URI is provided
-  const isAtlasConfigured = uri && uri.startsWith('mongodb+srv://') && !uri.includes('<user>') && !uri.includes('<password>');
+  const isAtlasConfigured = uri && uri.startsWith('mongodb+srv://') && !uri.includes('<') && !uri.includes('>');
 
   if (isAtlasConfigured) {
     try {
       console.log('\n[MongoDB] Connecting to MongoDB Atlas cluster...');
       const conn = await mongoose.connect(uri, {
         dbName: 'tiffinloop',
-        serverSelectionTimeoutMS: 5000,
+        serverSelectionTimeoutMS: 8000,
       });
       isConnected = true;
       console.log(`✅ [MongoDB Atlas] Connected successfully to host: ${conn.connection.host}`);
+
+      // Auto-seed Atlas if collections are empty so it's fully populated
+      const { seedDataDirectly } = await import('../seed/seedDataHelper.js');
+      const { Provider } = await import('../models/Provider.model.js');
+      const providerCount = await Provider.countDocuments();
+      if (providerCount === 0) {
+        console.log('[MongoDB Atlas] Empty database detected. Seeding initial data into Atlas...');
+        await seedDataDirectly();
+        console.log('✅ [MongoDB Atlas] Database successfully seeded!');
+      }
+
       return conn;
     } catch (error) {
       console.error(`❌ [MongoDB Atlas Error]: ${error.message}`);

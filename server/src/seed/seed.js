@@ -1,5 +1,12 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
 import bcrypt from 'bcryptjs';
+
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch {
+  // Ignore DNS config failure
+}
 import { env } from '../config/env.js';
 import { User } from '../models/User.model.js';
 import { Provider } from '../models/Provider.model.js';

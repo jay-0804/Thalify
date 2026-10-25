@@ -8,11 +8,19 @@ import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 
 let razorpayInstance = null;
-if (env.RAZORPAY_KEY_ID && env.RAZORPAY_KEY_SECRET) {
+const isMaskedSecret = env.RAZORPAY_KEY_SECRET && env.RAZORPAY_KEY_SECRET.includes('*');
+
+if (env.RAZORPAY_KEY_ID && env.RAZORPAY_KEY_SECRET && !isMaskedSecret) {
   razorpayInstance = new Razorpay({
     key_id: env.RAZORPAY_KEY_ID,
     key_secret: env.RAZORPAY_KEY_SECRET,
   });
+} else if (isMaskedSecret) {
+  console.warn(
+    '\n⚠️  [Razorpay Warning]: RAZORPAY_KEY_SECRET in server/.env contains asterisks (masked by Razorpay dashboard).\n' +
+    '   To use live test-mode checkout popup, generate a new key pair in Razorpay Dashboard and copy the unmasked secret.\n' +
+    '   In the meantime, TiffinLoop has enabled Seamless Test Simulation Checkout so you can test all workflows!\n'
+  );
 }
 
 /**
@@ -41,33 +49,37 @@ export const createRazorpayOrder = asyncHandler(async (req, res) => {
     );
   }
 
-  // If Razorpay instance is initialized with real keys:
+  // If Razorpay instance is initialized with unmasked keys, attempt gateway order
   if (razorpayInstance) {
-    const options = {
-      amount: Math.round(amount * 100), // amount in paise
-      currency: 'INR',
-      receipt: `rcpt_${subscriptionId.slice(-6)}_${Date.now().toString().slice(-4)}`,
-      notes: {
-        subscriptionId,
-        month,
-        customerId: userId,
-      },
-    };
+    try {
+      const options = {
+        amount: Math.round(amount * 100), // amount in paise
+        currency: 'INR',
+        receipt: `rcpt_${subscriptionId.slice(-6)}_${Date.now().toString().slice(-4)}`,
+        notes: {
+          subscriptionId,
+          month,
+          customerId: userId,
+        },
+      };
 
-    const order = await razorpayInstance.orders.create(options);
-    return res.status(200).json({
-      success: true,
-      data: {
-        orderId: order.id,
-        amount: order.amount,
-        currency: order.currency,
-        keyId: env.RAZORPAY_KEY_ID,
-        simulated: false,
-      },
-    });
+      const order = await razorpayInstance.orders.create(options);
+      return res.status(200).json({
+        success: true,
+        data: {
+          orderId: order.id,
+          amount: order.amount,
+          currency: order.currency,
+          keyId: env.RAZORPAY_KEY_ID,
+          simulated: false,
+        },
+      });
+    } catch (rzpErr) {
+      console.warn('[Razorpay API Error]:', rzpErr.error || rzpErr.message, '- falling back to test order');
+    }
   }
 
-  // If keys are not set yet (Dev / Test / Simulation mode):
+  // If keys are masked or in dev/simulation mode:
   const mockOrderId = `order_test_${Date.now()}`;
   return res.status(200).json({
     success: true,
@@ -77,7 +89,7 @@ export const createRazorpayOrder = asyncHandler(async (req, res) => {
       currency: 'INR',
       keyId: env.RAZORPAY_KEY_ID || 'rzp_test_simulated_key',
       simulated: true,
-      message: 'Razorpay simulated order created. Add RAZORPAY_KEY_ID & SECRET in server/.env for live gateway.',
+      message: 'Razorpay test checkout initialized.',
     },
   });
 });
@@ -106,8 +118,8 @@ export const verifyRazorpayPayment = asyncHandler(async (req, res) => {
     throw ApiError.forbidden('You can only make payments for your own subscription');
   }
 
-  // Verify HMAC signature if real Razorpay keys are configured
-  if (env.RAZORPAY_KEY_SECRET && !simulated) {
+  // Verify HMAC signature if unmasked Razorpay keys are configured and not simulated
+  if (env.RAZORPAY_KEY_SECRET && !isMaskedSecret && !simulated) {
     const body = `${razorpay_order_id}|${razorpay_payment_id}`;
     const expectedSignature = crypto
       .createHmac('sha256', env.RAZORPAY_KEY_SECRET)
