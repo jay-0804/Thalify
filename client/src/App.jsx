@@ -7,6 +7,9 @@ import { SocketProvider } from './context/SocketContext.jsx';
 import Navbar from './components/Navbar.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
+// Public Landing Page
+import LandingPage from './pages/LandingPage.jsx';
+
 // Auth Pages
 import Login from './pages/auth/Login.jsx';
 import Register from './pages/auth/Register.jsx';
@@ -40,8 +43,8 @@ export const App = () => {
             {/* Main Application Content */}
             <main className="flex-1">
               <Routes>
-                {/* Public & Auth Routes */}
-                <Route path="/" element={<Navigate to="/providers" replace />} />
+                {/* Public Landing & Marketing Showcase */}
+                <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/providers" element={<Providers />} />

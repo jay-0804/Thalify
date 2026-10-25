@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-canvas text-mocha-900;
+    @apply bg-canvas text-mocha-950;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
@@ -13,7 +13,95 @@
   }
 }
 
-/* Custom smooth transitions and animations */
+/* Custom 3D Animation Utilities */
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Smooth culinary float animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(1.5deg);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(14px) rotate(-1.5deg);
+  }
+}
+
+@keyframes steam-rise {
+  0% {
+    transform: translateY(0) scaleX(1) opacity(0);
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-30px) scaleX(1.4) opacity(0);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(217, 107, 39, 0.25), 0 0 60px rgba(197, 160, 89, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(217, 107, 39, 0.45), 0 0 90px rgba(197, 160, 89, 0.25);
+  }
+}
+
+@keyframes rotate-360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: rotate-360 40s linear infinite;
+}
+
+.steam-1 {
+  animation: steam-rise 3s ease-out infinite;
+}
+.steam-2 {
+  animation: steam-rise 3.4s ease-out infinite 0.7s;
+}
+.steam-3 {
+  animation: steam-rise 2.8s ease-out infinite 1.4s;
+}
+
+/* Custom smooth transitions */
 .transition-smooth {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
