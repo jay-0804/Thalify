@@ -99,11 +99,11 @@ export const Navbar = () => {
                 )}
               </>
             ) : (
-              <>
-                <NavLink to="/providers" className={navLinkStyle}>
-                  Browse Kitchens
-                </NavLink>
-              </>
+              <div className="hidden lg:flex items-center space-x-6 text-xs font-medium text-mocha-600">
+                <a href="#how-it-works" className="hover:text-mocha-950 transition-colors">How It Works</a>
+                <a href="#culinary-variety" className="hover:text-mocha-950 transition-colors">Cuisines</a>
+                <a href="#partner-section" className="hover:text-mocha-950 transition-colors">For Kitchens</a>
+              </div>
             )}
           </nav>
 
@@ -128,18 +128,25 @@ export const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2.5">
+                <Link
+                  to="/register?role=provider"
+                  className="hidden sm:inline-flex items-center px-3 py-1.5 text-xs font-semibold text-gold-800 hover:text-gold-900 hover:bg-gold-50/70 rounded-xl transition-smooth"
+                >
+                  <ChefHat className="w-3.5 h-3.5 mr-1 text-gold-600" />
+                  <span>Partner Kitchen</span>
+                </Link>
                 <Link
                   to="/login"
-                  className="px-3.5 py-1.5 text-sm font-semibold text-mocha-700 hover:text-mocha-950 transition-smooth"
+                  className="px-3.5 py-1.5 text-xs font-semibold text-mocha-700 hover:text-mocha-950 hover:bg-mocha-100/60 rounded-xl transition-smooth"
                 >
                   Log in
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-1.5 text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-lg shadow-sm transition-smooth"
+                  className="px-4 py-2 text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-xs transition-smooth hover:scale-105"
                 >
-                  Sign Up
+                  Get Started
                 </Link>
               </div>
             )}

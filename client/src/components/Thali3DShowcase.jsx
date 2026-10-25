@@ -48,12 +48,12 @@ export const Thali3DShowcase = () => {
         <div className="absolute inset-4 rounded-full bg-gradient-to-br from-gold-400 via-amber-600 to-mocha-900 p-2 shadow-2xl preserve-3d">
           {/* Inner Plate Surface */}
           <div className="w-full h-full rounded-full bg-gradient-to-tr from-mocha-950 via-mocha-900 to-mocha-950 p-6 relative overflow-hidden shadow-inner border-4 border-gold-400/40">
-            {/* Plate Center Realistic Thali Image */}
+            {/* Plate Center Ultra-Clean Top-Down Thali Image */}
             <div className="relative w-full h-full rounded-full overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=900&q=85"
+                src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1000&q=85"
                 alt="Traditional Homestyle Indian Thali"
-                className="w-full h-full object-cover scale-110 animate-spin-slow opacity-95"
+                className="w-full h-full object-cover scale-110 opacity-95 transition-transform duration-500 hover:scale-115"
               />
 
               {/* Realistic Steam Particle Overlay */}
@@ -77,7 +77,7 @@ export const Thali3DShowcase = () => {
           </div>
           <div>
             <p className="text-[10px] text-mocha-500 uppercase tracking-wider">Zero Dispute</p>
-            <p>Skip Before 8:00 PM</p>
+            <p>Skip Before 5:00 PM</p>
           </div>
         </div>
 
@@ -112,14 +112,6 @@ export const Thali3DShowcase = () => {
             </p>
           </div>
         </div>
-      </div>
-
-      {/* Interactive prompt hint */}
-      <div className="text-center mt-6">
-        <p className="text-[11px] font-medium text-mocha-400 flex items-center justify-center space-x-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-gold-500" />
-          <span>Move your cursor to rotate the 3D homestyle thali</span>
-        </p>
       </div>
     </div>
   );

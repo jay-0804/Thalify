@@ -44,8 +44,8 @@ export const seedDatabase = async () => {
 
   const defaultPasswordHash = await bcrypt.hash('Demo@1234', 10);
 
-  console.log('[Seed] Creating demo provider owners...');
-  // Provider 1 Owner: Maa Ki Rasoi
+  console.log('[Seed] Creating demo provider owners & 8 neighborhood kitchens...');
+  // Provider 1: Maa Ki Rasoi (North Indian Homestyle)
   const providerOwner1 = await User.create({
     name: 'Sunita Sharma',
     email: 'provider@demo.com', // Demo login
@@ -57,15 +57,34 @@ export const seedDatabase = async () => {
   const provider1 = await Provider.create({
     ownerId: providerOwner1._id,
     businessName: 'Maa Ki Rasoi',
-    description: 'Authentic homestyle North Indian meals made with cold-pressed mustard oil and love.',
+    description: 'Authentic homestyle North Indian meals made with cold-pressed mustard oil, desi ghee phulkas, and fresh seasonal vegetables.',
     contactPhone: '9876543210',
-    deliveryAreas: ['Koramangala', 'HSR Layout', 'BTM'],
-    cutoffTime: '20:00',
+    deliveryAreas: ['Koramangala', 'HSR Layout', 'BTM Layout'],
+    cutoffTime: '17:00',
     isActive: true,
   });
 
-  // Provider 2 Owner: Campus Mess Co
+  // Provider 2: Annapurna Homely Mess (South Indian Traditional)
   const providerOwner2 = await User.create({
+    name: 'Lakshmi Narayanan',
+    email: 'annapurna@demo.com',
+    passwordHash: defaultPasswordHash,
+    phone: '9876543212',
+    role: 'provider',
+  });
+
+  const provider2 = await Provider.create({
+    ownerId: providerOwner2._id,
+    businessName: 'Annapurna Homely Mess',
+    description: 'Traditional Tamil & Andhra homestyle meals cooked with homemade podis, ghee sambar, soothing rasam, seasonal poriyal, and fresh curd.',
+    contactPhone: '9876543212',
+    deliveryAreas: ['BTM Layout', 'Koramangala', 'Jayanagar'],
+    cutoffTime: '17:00',
+    isActive: true,
+  });
+
+  // Provider 3: Campus Mess Co (Budget & Student Specials)
+  const providerOwner3 = await User.create({
     name: 'Rajesh Verma',
     email: 'campus@demo.com',
     passwordHash: defaultPasswordHash,
@@ -73,25 +92,120 @@ export const seedDatabase = async () => {
     role: 'provider',
   });
 
-  const provider2 = await Provider.create({
-    ownerId: providerOwner2._id,
+  const provider3 = await Provider.create({
+    ownerId: providerOwner3._id,
     businessName: 'Campus Mess Co',
-    description: 'Budget-friendly, high-protein wholesome meals curated for engineering and college students.',
+    description: 'Budget-friendly, wholesome meals curated for engineering students and young tech professionals with zero compromise on hygiene.',
     contactPhone: '9876543211',
-    deliveryAreas: ['Whitefield', 'Marathahalli'],
-    cutoffTime: '21:00',
+    deliveryAreas: ['Whitefield', 'BTM Layout', 'Koramangala'],
+    cutoffTime: '17:00',
+    isActive: true,
+  });
+
+  // Provider 4: Shuddh Satvik Rasoi (Pure Satvik & Jain)
+  const providerOwner4 = await User.create({
+    name: 'Manish Jain',
+    email: 'satvik@demo.com',
+    passwordHash: defaultPasswordHash,
+    phone: '9876543213',
+    role: 'provider',
+  });
+
+  const provider4 = await Provider.create({
+    ownerId: providerOwner4._id,
+    businessName: 'Shuddh Satvik Rasoi',
+    description: '100% Pure Jain & Satvik food cooked without onion, garlic, or root vegetables. Light on digestion, wholesome, and sanctified.',
+    contactPhone: '9876543213',
+    deliveryAreas: ['HSR Layout', 'Koramangala', 'Jayanagar'],
+    cutoffTime: '17:00',
+    isActive: true,
+  });
+
+  // Provider 5: NutriFit Clean Fuel (High-Protein & Gym Meals)
+  const providerOwner5 = await User.create({
+    name: 'Coach Rohan Mehra',
+    email: 'nutrifit@demo.com',
+    passwordHash: defaultPasswordHash,
+    phone: '9876543214',
+    role: 'provider',
+  });
+
+  const provider5 = await Provider.create({
+    ownerId: providerOwner5._id,
+    businessName: 'NutriFit Clean Fuel',
+    description: 'Clean macro-counted fitness meals with 35g+ verified protein: grilled chicken/paneer, boiled eggs, quinoa/brown rice, and fresh sprouts.',
+    contactPhone: '9876543214',
+    deliveryAreas: ['Koramangala', 'HSR Layout', 'Whitefield', 'Indiranagar'],
+    cutoffTime: '17:00',
+    isActive: true,
+  });
+
+  // Provider 6: Bramhin's Heritage Mess (Authentic Udupi & Traditional)
+  const providerOwner6 = await User.create({
+    name: 'Shankar Bhat',
+    email: 'heritage@demo.com',
+    passwordHash: defaultPasswordHash,
+    phone: '9876543215',
+    role: 'provider',
+  });
+
+  const provider6 = await Provider.create({
+    ownerId: providerOwner6._id,
+    businessName: "Bramhin's Heritage Mess",
+    description: 'Authentic Udupi Oota prepared according to traditional culinary shlokas: Majjige Huli, Bisi Bele Bath, fresh Kosambari, and home-churned ghee.',
+    contactPhone: '9876543215',
+    deliveryAreas: ['Jayanagar', 'BTM Layout'],
+    cutoffTime: '17:00',
+    isActive: true,
+  });
+
+  // Provider 7: Whitefield Chef Table (Executive Home Chef Meals)
+  const providerOwner7 = await User.create({
+    name: 'Kavita Chawla',
+    email: 'whitefieldchef@demo.com',
+    passwordHash: defaultPasswordHash,
+    phone: '9876543216',
+    role: 'provider',
+  });
+
+  const provider7 = await Provider.create({
+    ownerId: providerOwner7._id,
+    businessName: 'Whitefield Chef Table',
+    description: 'Nutritious homestyle lunch and dinner boxes prepared for IT corridor professionals. Balanced oils, premium grains, and homestyle taste.',
+    contactPhone: '9876543216',
+    deliveryAreas: ['Whitefield', 'Indiranagar'],
+    cutoffTime: '17:00',
+    isActive: true,
+  });
+
+  // Provider 8: Dakshin Daily Meals (Tamil & Malabar Homestyle)
+  const providerOwner8 = await User.create({
+    name: 'Murugan Pillai',
+    email: 'dakshin@demo.com',
+    passwordHash: defaultPasswordHash,
+    phone: '9876543217',
+    role: 'provider',
+  });
+
+  const provider8 = await Provider.create({
+    ownerId: providerOwner8._id,
+    businessName: 'Dakshin Daily Meals',
+    description: 'Flavor-rich Chettinad and Malabar homestyle tiffins: fluffy Appams, Ghee Roast Dosa, Malabar Parotta with Veg Kurma, and Pepper Chicken Curry.',
+    contactPhone: '9876543217',
+    deliveryAreas: ['Indiranagar', 'HSR Layout'],
+    cutoffTime: '17:00',
     isActive: true,
   });
 
   console.log('[Seed] Creating plans for each provider...');
-  // 3 plans for Provider 1
+  // Plans for Provider 1 (Maa Ki Rasoi)
   const p1PlanVegLunch = await Plan.create({
     providerId: provider1._id,
     name: 'Daily Veg Thali (Lunch)',
     description: '4 Rotis, Dal Tadka, Seasonal Sabzi, Jeera Rice, Salad, Pickle',
     mealType: 'lunch',
     diet: 'veg',
-    pricePerMeal: 90,
+    pricePerMeal: 95,
     daysOfWeek: [1, 2, 3, 4, 5, 6], // Mon - Sat
     isActive: true,
   });
@@ -118,9 +232,32 @@ export const seedDatabase = async () => {
     isActive: true,
   });
 
-  // 3 plans for Provider 2
-  const p2PlanStudentLunch = await Plan.create({
+  // Plans for Provider 2 (Annapurna Homely Mess)
+  await Plan.create({
     providerId: provider2._id,
+    name: 'Traditional Tamil Oota (Lunch)',
+    description: 'Steamed Sona Masoori, Ghee Sambar, Pepper Rasam, Poriyal, Curd, Appalam',
+    mealType: 'lunch',
+    diet: 'veg',
+    pricePerMeal: 85,
+    daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+    isActive: true,
+  });
+
+  await Plan.create({
+    providerId: provider2._id,
+    name: 'South Tiffin Dinner',
+    description: '3 Soft Idlis or 2 Phulkas, Sambar, Coconut Chutney, Vegetable Kurma',
+    mealType: 'dinner',
+    diet: 'veg',
+    pricePerMeal: 85,
+    daysOfWeek: [1, 2, 3, 4, 5, 6],
+    isActive: true,
+  });
+
+  // Plans for Provider 3 (Campus Mess Co)
+  const p2PlanStudentLunch = await Plan.create({
+    providerId: provider3._id,
     name: 'Student Express Lunch',
     description: 'Dal Makhani, Rice, 3 Rotis, Aloo Jeera',
     mealType: 'lunch',
@@ -131,7 +268,7 @@ export const seedDatabase = async () => {
   });
 
   const p2PlanProteinDinner = await Plan.create({
-    providerId: provider2._id,
+    providerId: provider3._id,
     name: 'High Protein Gym Dinner',
     description: 'Soya chunks / Paneer Bhurji, Brown Rice, Dal, Sprouts salad',
     mealType: 'dinner',
@@ -142,13 +279,84 @@ export const seedDatabase = async () => {
   });
 
   const p2PlanNonVegDinner = await Plan.create({
-    providerId: provider2._id,
+    providerId: provider3._id,
     name: 'Non-Veg Feast Dinner',
     description: 'Butter Chicken / Chicken Sukka, 4 Rotis, Rice, Raita',
     mealType: 'dinner',
     diet: 'nonveg',
     pricePerMeal: 150,
     daysOfWeek: [1, 3, 5, 0],
+    isActive: true,
+  });
+
+  // Plans for Provider 4 (Shuddh Satvik Rasoi)
+  await Plan.create({
+    providerId: provider4._id,
+    name: 'Satvik Pure Veg Thali (Lunch)',
+    description: '4 Desi Ghee Phulkas, Toor Dal, Lauki/Karela Sabzi, Steamed Basmati, Chaas (No Onion No Garlic)',
+    mealType: 'lunch',
+    diet: 'veg',
+    pricePerMeal: 90,
+    daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+    isActive: true,
+  });
+
+  // Plans for Provider 5 (NutriFit Clean Fuel)
+  await Plan.create({
+    providerId: provider5._id,
+    name: '35g+ Protein Power Bowl (Lunch)',
+    description: '200g Grilled Chicken/Paneer, Herb Quinoa & Brown Rice, Boiled Eggs, Green Sprouts, Broccoli Salad',
+    mealType: 'lunch',
+    diet: 'nonveg',
+    pricePerMeal: 145,
+    daysOfWeek: [1, 2, 3, 4, 5, 6],
+    isActive: true,
+  });
+
+  await Plan.create({
+    providerId: provider5._id,
+    name: 'Clean Lean Veg Protein (Dinner)',
+    description: 'Tofu/Paneer Stir-fry, Yellow Moong Dal, 2 Multigrain Rotis, Cucumber & Flaxseed Salad',
+    mealType: 'dinner',
+    diet: 'veg',
+    pricePerMeal: 135,
+    daysOfWeek: [1, 2, 3, 4, 5, 6],
+    isActive: true,
+  });
+
+  // Plans for Provider 6 (Bramhin's Heritage Mess)
+  await Plan.create({
+    providerId: provider6._id,
+    name: 'Heritage Udupi Full Oota',
+    description: 'Bisi Bele Bath, Kosambari, Majjige Huli, Steamed Rice, 2 Phulkas, Payasa',
+    mealType: 'lunch',
+    diet: 'veg',
+    pricePerMeal: 90,
+    daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+    isActive: true,
+  });
+
+  // Plans for Provider 7 (Whitefield Chef Table)
+  await Plan.create({
+    providerId: provider7._id,
+    name: 'Executive Homestyle Tiffin',
+    description: 'Punjabi Dal Makhani, Paneer Lababdar / Chicken Masala, 3 Butter Rotis, Pulao, Dessert',
+    mealType: 'dinner',
+    diet: 'veg',
+    pricePerMeal: 110,
+    daysOfWeek: [1, 2, 3, 4, 5],
+    isActive: true,
+  });
+
+  // Plans for Provider 8 (Dakshin Daily Meals)
+  await Plan.create({
+    providerId: provider8._id,
+    name: 'Chettinad Special Lunch Box',
+    description: 'Steamed Rice, Chettinad Pepper Gravy, Kootu, 2 Kerala Parottas or Rotis, Curd',
+    mealType: 'lunch',
+    diet: 'nonveg',
+    pricePerMeal: 95,
+    daysOfWeek: [1, 2, 3, 4, 5, 6],
     isActive: true,
   });
 
@@ -164,34 +372,35 @@ export const seedDatabase = async () => {
     { lunch: ['Veg Biryani', 'Mirchi Ka Salan', 'Cucumber Raita'], dinner: ['Khichdi with Desi Ghee', 'Roasted Papad', 'Achar', 'Dahi'] },
   ];
 
+  const allProvidersList = [
+    provider1,
+    provider2,
+    provider3,
+    provider4,
+    provider5,
+    provider6,
+    provider7,
+    provider8,
+  ];
+
   for (let i = -2; i < 7; i++) {
     const d = addDaysIST(today, i);
-    const dishIdx = Math.abs(i) % sampleDishes.length;
-    await MenuItem.create({
-      providerId: provider1._id,
-      date: d,
-      mealType: 'lunch',
-      dishes: sampleDishes[dishIdx].lunch,
-    });
-    await MenuItem.create({
-      providerId: provider1._id,
-      date: d,
-      mealType: 'dinner',
-      dishes: sampleDishes[dishIdx].dinner,
-    });
-
-    await MenuItem.create({
-      providerId: provider2._id,
-      date: d,
-      mealType: 'lunch',
-      dishes: sampleDishes[(dishIdx + 2) % sampleDishes.length].lunch,
-    });
-    await MenuItem.create({
-      providerId: provider2._id,
-      date: d,
-      mealType: 'dinner',
-      dishes: sampleDishes[(dishIdx + 2) % sampleDishes.length].dinner,
-    });
+    for (let pIdx = 0; pIdx < allProvidersList.length; pIdx++) {
+      const p = allProvidersList[pIdx];
+      const dishIdx = (Math.abs(i) + pIdx) % sampleDishes.length;
+      await MenuItem.create({
+        providerId: p._id,
+        date: d,
+        mealType: 'lunch',
+        dishes: sampleDishes[dishIdx].lunch,
+      });
+      await MenuItem.create({
+        providerId: p._id,
+        date: d,
+        mealType: 'dinner',
+        dishes: sampleDishes[dishIdx].dinner,
+      });
+    }
   }
 
   console.log('[Seed] Creating delivery staff (2 per provider)...');

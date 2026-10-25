@@ -25,48 +25,84 @@ import {
 const KITCHEN_METADATA = {
   'Maa Ki Rasoi': {
     image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80',
-    tagline: 'Desi Ghee Phulkas & Slow-Cooked Dal',
+    tagline: 'Desi Ghee Phulkas & Slow-Cooked Dal Makhani',
     rating: 4.9,
     reviews: 420,
-    cuisine: 'North Indian Homestyle',
+    cuisine: 'North Indian',
     fssai: 'FSSAI Certified #21224018000124',
     badge: 'Top Rated in Koramangala',
   },
   'Annapurna Homely Mess': {
-    image: 'https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=800&q=80',
     tagline: 'Traditional Tamil Sambar, Rasam & Podi Oota',
     rating: 4.8,
     reviews: 385,
-    cuisine: 'South Indian Traditional',
+    cuisine: 'South Indian',
     fssai: 'FSSAI Certified #21224018000350',
     badge: 'Authentic Comfort Food',
   },
   'Campus Mess Co': {
-    image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80',
-    tagline: 'Student Budget & 35g High-Protein Gym Meals',
+    image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80',
+    tagline: 'Wholesome Student Budget & Homestyle Thalis',
     rating: 4.7,
     reviews: 512,
-    cuisine: 'Fitness & Student Specials',
+    cuisine: 'North Indian',
     fssai: 'FSSAI Certified #21224018000889',
     badge: 'Popular with Tech PGs',
   },
   'Shuddh Satvik Rasoi': {
-    image: 'https://images.unsplash.com/photo-1505253758473-96b3d5ebcd96?auto=format&fit=crop&w=800&q=80',
-    tagline: '100% Jain & No Onion No Garlic Satvik Food',
+    image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
+    tagline: '100% Jain & No Onion No Garlic Satvik Meals',
     rating: 4.9,
     reviews: 295,
-    cuisine: 'Pure Satvik / Jain',
+    cuisine: 'Satvik',
     fssai: 'FSSAI Certified #21224018000412',
     badge: 'Sanctified Pure Kitchen',
+  },
+  'NutriFit Clean Fuel': {
+    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
+    tagline: 'Macro-Counted High Protein & Clean Gym Fuel',
+    rating: 4.9,
+    reviews: 460,
+    cuisine: 'Fitness',
+    fssai: 'FSSAI Certified #21224018000671',
+    badge: '35g+ Verified Protein',
+  },
+  "Bramhin's Heritage Mess": {
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
+    tagline: 'Pure Ghee Udupi Oota, Majjige Huli & Kootu',
+    rating: 4.9,
+    reviews: 340,
+    cuisine: 'South Indian',
+    fssai: 'FSSAI Certified #21224018000219',
+    badge: 'Heritage Recipe Since 1994',
+  },
+  'Whitefield Chef Table': {
+    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80',
+    tagline: 'Nutritious Executive Home Chef Meals for IT Pros',
+    rating: 4.8,
+    reviews: 310,
+    cuisine: 'North Indian',
+    fssai: 'FSSAI Certified #21224018000552',
+    badge: 'Executive Daily Meals',
+  },
+  'Dakshin Daily Meals': {
+    image: 'https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80',
+    tagline: 'Homestyle Chettinad & Malabar Daily Tiffin',
+    rating: 4.7,
+    reviews: 280,
+    cuisine: 'South Indian',
+    fssai: 'FSSAI Certified #21224018000783',
+    badge: 'Coconut Oil & Spices',
   },
 };
 
 const DEFAULT_METADATA = {
-  image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80',
+  image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80',
   tagline: 'Nutritious & Fresh Homestyle Meals',
   rating: 4.8,
   reviews: 210,
-  cuisine: 'Homestyle Indian',
+  cuisine: 'North Indian',
   fssai: 'Verified Home Mess',
   badge: 'Neighborhood Favorite',
 };
@@ -131,7 +167,7 @@ export const Providers = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight leading-tight">
               Hot Homestyle Meals. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-gold-400">
-                Skip Anytime Before 8 PM.
+                Skip Anytime Before 5:00 PM.
               </span>
             </h1>
 
@@ -146,7 +182,7 @@ export const Providers = () => {
                 <p className="text-mocha-300 font-medium">Auto-Credit on Skips</p>
               </div>
               <div className="space-y-1">
-                <p className="text-lg sm:text-2xl font-serif font-black text-amber-400">IST 20:00</p>
+                <p className="text-lg sm:text-2xl font-serif font-black text-amber-400">IST 17:00</p>
                 <p className="text-mocha-300 font-medium">Server-Guaranteed Cutoff</p>
               </div>
               <div className="space-y-1">
@@ -238,7 +274,7 @@ export const Providers = () => {
             >
               All Neighborhoods
             </button>
-            {['Koramangala', 'HSR Layout', 'BTM Layout', 'Whitefield', 'Jayanagar'].map((area) => (
+            {['Koramangala', 'HSR Layout', 'BTM Layout', 'Whitefield', 'Jayanagar', 'Indiranagar'].map((area) => (
               <button
                 key={area}
                 onClick={() => setSelectedArea(area)}
@@ -426,7 +462,7 @@ export const Providers = () => {
               <ul className="space-y-3 text-xs text-mocha-900">
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <span><strong>1-Click Calendar Skip:</strong> Toggle skip before 8 PM. Server automatically validates and freezes counts.</span>
+                  <span><strong>1-Click Calendar Skip:</strong> Toggle skip before 5:00 PM. Server automatically validates and freezes counts.</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />

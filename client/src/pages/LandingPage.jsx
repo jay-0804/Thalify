@@ -47,7 +47,7 @@ export const LandingPage = () => {
             </h1>
 
             <p className="text-mocha-200 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Subscribe to verified neighborhood home kitchens and PG messes. Going out with friends? Skip any meal with 1-click before 8:00 PM. Your bill automatically credits every single rupee.
+              Subscribe to verified neighborhood home kitchens and PG messes. Going out with friends? Skip any meal with 1-click before 5:00 PM cutoff. Your bill automatically credits every single rupee.
             </p>
 
             {/* CTAs */}
@@ -69,19 +69,19 @@ export const LandingPage = () => {
               </a>
             </div>
 
-            {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-mocha-800/80 max-w-lg mx-auto lg:mx-0 text-xs">
-              <div>
-                <p className="text-2xl sm:text-3xl font-serif font-black text-gold-400">100%</p>
-                <p className="text-mocha-300 font-medium mt-0.5">Skip Credits</p>
+            {/* Aligned Metrics Bar */}
+            <div className="grid grid-cols-3 gap-3 pt-6 max-w-lg mx-auto lg:mx-0">
+              <div className="p-3.5 rounded-2xl bg-mocha-900/70 border border-mocha-700/60 text-center flex flex-col justify-center h-20 shadow-xs">
+                <p className="text-xl sm:text-2xl font-serif font-black text-gold-400">100%</p>
+                <p className="text-[11px] text-mocha-300 font-medium truncate mt-0.5">Skip Credits</p>
               </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-serif font-black text-amber-400">20:00</p>
-                <p className="text-mocha-300 font-medium mt-0.5">Server Cutoff</p>
+              <div className="p-3.5 rounded-2xl bg-mocha-900/70 border border-mocha-700/60 text-center flex flex-col justify-center h-20 shadow-xs">
+                <p className="text-xl sm:text-2xl font-serif font-black text-amber-400">17:00 IST</p>
+                <p className="text-[11px] text-mocha-300 font-medium truncate mt-0.5">Daily Cutoff</p>
               </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-serif font-black text-white">₹0 Drift</p>
-                <p className="text-mocha-300 font-medium mt-0.5">Derived Ledger</p>
+              <div className="p-3.5 rounded-2xl bg-mocha-900/70 border border-mocha-700/60 text-center flex flex-col justify-center h-20 shadow-xs">
+                <p className="text-xl sm:text-2xl font-serif font-black text-white">₹0 Drift</p>
+                <p className="text-[11px] text-mocha-300 font-medium truncate mt-0.5">Derived Ledger</p>
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@ export const LandingPage = () => {
       </section>
 
       {/* 2. CULINARY VARIETY SHOWCASE (Interactive Food Gallery) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section id="culinary-variety" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold uppercase tracking-widest text-amber-700">
             Catering to Every Palate
@@ -108,8 +108,8 @@ export const LandingPage = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Card 1 */}
-          <div className="bg-white rounded-3xl border border-mocha-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
+          {/* Card 1: North Indian */}
+          <div className="bg-white rounded-3xl border border-mocha-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
             <div>
               <div className="h-48 overflow-hidden relative">
                 <img
@@ -117,115 +117,115 @@ export const LandingPage = () => {
                   alt="North Indian Thali"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-mocha-950/80 text-gold-300">
-                  Desi Ghee
+                <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold bg-mocha-950/85 text-gold-300 backdrop-blur-xs shadow-xs">
+                  Desi Ghee Phulkas
                 </span>
               </div>
               <div className="p-5 space-y-2">
-                <h3 className="text-base font-serif font-bold text-mocha-950">
+                <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   North Indian Homestyle
                 </h3>
-                <p className="text-xs text-mocha-600">
-                  Phulkas with desi ghee, rajma chawal, slow-cooked dal makhani, paneer bhurji & seasonal sabzi.
+                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                  Slow-cooked dal makhani, tender paneer, phulkas with desi ghee, jeera rice & seasonal sabzi.
                 </p>
               </div>
             </div>
-            <div className="p-5 pt-0 flex items-center justify-between text-xs border-t border-mocha-100">
-              <span className="font-bold text-mocha-900">From ₹95 / meal</span>
-              <Link to="/providers" className="text-amber-700 font-bold hover:underline flex items-center">
+            <div className="p-5 pt-3 flex items-center justify-between text-xs border-t border-mocha-100 bg-mocha-50/20">
+              <span className="font-bold text-mocha-900">From ₹95 <span className="font-normal text-mocha-500">/ meal</span></span>
+              <Link to="/providers" className="text-amber-700 font-bold hover:text-amber-800 flex items-center group-hover:translate-x-0.5 transition-transform">
                 <span>View Plans</span>
                 <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Link>
             </div>
           </div>
 
-          {/* Card 2 */}
-          <div className="bg-white rounded-3xl border border-mocha-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
+          {/* Card 2: South Indian */}
+          <div className="bg-white rounded-3xl border border-mocha-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
             <div>
               <div className="h-48 overflow-hidden relative">
                 <img
-                  src="https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=700&q=80"
+                  src="https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=700&q=80"
                   alt="South Indian Traditional Meal"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-mocha-950/80 text-gold-300">
-                  Banana Leaf
+                <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold bg-mocha-950/85 text-gold-300 backdrop-blur-xs shadow-xs">
+                  Banana Leaf Oota
                 </span>
               </div>
               <div className="p-5 space-y-2">
-                <h3 className="text-base font-serif font-bold text-mocha-950">
+                <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   Traditional South Indian
                 </h3>
-                <p className="text-xs text-mocha-600">
-                  Steamed Sona Masoori, drumstick sambar, soothing pepper rasam, seasonal poriyal, curd & appalam.
+                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                  Steamed Sona Masoori, drumstick sambar, soothing pepper rasam, seasonal poriyal & curd.
                 </p>
               </div>
             </div>
-            <div className="p-5 pt-0 flex items-center justify-between text-xs border-t border-mocha-100">
-              <span className="font-bold text-mocha-900">From ₹85 / meal</span>
-              <Link to="/providers" className="text-amber-700 font-bold hover:underline flex items-center">
+            <div className="p-5 pt-3 flex items-center justify-between text-xs border-t border-mocha-100 bg-mocha-50/20">
+              <span className="font-bold text-mocha-900">From ₹85 <span className="font-normal text-mocha-500">/ meal</span></span>
+              <Link to="/providers" className="text-amber-700 font-bold hover:text-amber-800 flex items-center group-hover:translate-x-0.5 transition-transform">
                 <span>View Plans</span>
                 <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Link>
             </div>
           </div>
 
-          {/* Card 3 */}
-          <div className="bg-white rounded-3xl border border-mocha-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
+          {/* Card 3: Fitness & Gym */}
+          <div className="bg-white rounded-3xl border border-mocha-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
             <div>
               <div className="h-48 overflow-hidden relative">
                 <img
-                  src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=700&q=80"
+                  src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=80"
                   alt="High Protein Fitness Meals"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-mocha-950/80 text-gold-300">
-                  35g+ Protein
+                <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold bg-mocha-950/85 text-gold-300 backdrop-blur-xs shadow-xs">
+                  35g+ Clean Protein
                 </span>
               </div>
               <div className="p-5 space-y-2">
-                <h3 className="text-base font-serif font-bold text-mocha-950">
+                <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   Fitness & Gym Meals
                 </h3>
-                <p className="text-xs text-mocha-600">
-                  Grilled paneer / chicken breast, egg whites, brown rice, whole lentils & green sprouts salad.
+                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                  Macro-counted grilled paneer or chicken, boiled eggs, brown rice, whole lentils & fresh salad.
                 </p>
               </div>
             </div>
-            <div className="p-5 pt-0 flex items-center justify-between text-xs border-t border-mocha-100">
-              <span className="font-bold text-mocha-900">From ₹145 / meal</span>
-              <Link to="/providers" className="text-amber-700 font-bold hover:underline flex items-center">
+            <div className="p-5 pt-3 flex items-center justify-between text-xs border-t border-mocha-100 bg-mocha-50/20">
+              <span className="font-bold text-mocha-900">From ₹145 <span className="font-normal text-mocha-500">/ meal</span></span>
+              <Link to="/providers" className="text-amber-700 font-bold hover:text-amber-800 flex items-center group-hover:translate-x-0.5 transition-transform">
                 <span>View Plans</span>
                 <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Link>
             </div>
           </div>
 
-          {/* Card 4 */}
-          <div className="bg-white rounded-3xl border border-mocha-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
+          {/* Card 4: Pure Satvik & Jain */}
+          <div className="bg-white rounded-3xl border border-mocha-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:border-gold-400 transition-smooth group flex flex-col justify-between">
             <div>
               <div className="h-48 overflow-hidden relative">
                 <img
-                  src="https://images.unsplash.com/photo-1505253758473-96b3d5ebcd96?auto=format&fit=crop&w=700&q=80"
+                  src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=700&q=80"
                   alt="Jain & Pure Satvik Food"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-mocha-950/80 text-gold-300">
+                <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold bg-mocha-950/85 text-gold-300 backdrop-blur-xs shadow-xs">
                   No Onion No Garlic
                 </span>
               </div>
               <div className="p-5 space-y-2">
-                <h3 className="text-base font-serif font-bold text-mocha-950">
+                <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   Pure Satvik & Jain
                 </h3>
-                <p className="text-xs text-mocha-600">
-                  Sanctified kitchens with no root vegetables, light on digestion, prepared fresh in morning.
+                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                  Sanctified kitchens with no root vegetables, light on digestion, prepared fresh each morning.
                 </p>
               </div>
             </div>
-            <div className="p-5 pt-0 flex items-center justify-between text-xs border-t border-mocha-100">
-              <span className="font-bold text-mocha-900">From ₹90 / meal</span>
-              <Link to="/providers" className="text-amber-700 font-bold hover:underline flex items-center">
+            <div className="p-5 pt-3 flex items-center justify-between text-xs border-t border-mocha-100 bg-mocha-50/20">
+              <span className="font-bold text-mocha-900">From ₹90 <span className="font-normal text-mocha-500">/ meal</span></span>
+              <Link to="/providers" className="text-amber-700 font-bold hover:text-amber-800 flex items-center group-hover:translate-x-0.5 transition-transform">
                 <span>View Plans</span>
                 <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Link>
@@ -234,8 +234,8 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* 3. STEP-BY-STEP WORKFLOW SHOWCASE (How TiffinLoop Works) */}
-      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 border-y border-mocha-200">
+      {/* 3. STEP-BY-STEP WORKFLOW SHOWCASE (How Thalify Works) */}
+      <section id="how-it-works" className="bg-white py-20 px-4 sm:px-6 lg:px-8 border-y border-mocha-200/80 scroll-mt-20">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-bold uppercase tracking-widest text-amber-700">
@@ -282,10 +282,10 @@ export const LandingPage = () => {
                 3
               </div>
               <h3 className="text-lg font-serif font-bold text-mocha-950">
-                Skip Before 8 PM
+                Skip Before 5:00 PM
               </h3>
               <p className="text-xs text-mocha-600 leading-relaxed">
-                Eating out? Toggle skip on your calendar. The kitchen's headcount drops instantly, and your money is saved.
+                Eating out? Toggle skip on your calendar before 5:00 PM (or 9:30 AM for lunch). The kitchen's headcount drops, and your bill credits every rupee.
               </p>
             </div>
 
@@ -393,24 +393,28 @@ export const LandingPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto text-left">
             {/* Customer Box */}
-            <div className="p-6 rounded-2xl bg-canvas-subtle/80 border border-mocha-200 space-y-3 flex flex-col justify-between">
+            <div className="p-6 rounded-3xl bg-canvas-subtle/80 border border-mocha-200/90 flex flex-col justify-between h-full shadow-xs">
               <div>
                 <span className="text-2xl">👤</span>
-                <h3 className="text-base font-serif font-bold text-mocha-950 mt-2">I am a Customer</h3>
-                <p className="text-xs text-mocha-600">Subscribe to healthy daily meals, skip anytime before cutoff.</p>
+                <h3 className="text-base font-serif font-bold text-mocha-950 mt-2 h-7 flex items-center">
+                  I am a Customer
+                </h3>
+                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                  Subscribe to healthy daily meals, skip anytime before cutoff with 1-click credits.
+                </p>
               </div>
-              <div className="space-y-2 pt-3 border-t border-mocha-200">
+              <div className="space-y-2.5 pt-4 border-t border-mocha-200/80 mt-4">
                 <Link
                   to="/register?role=customer"
-                  className="block w-full py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl text-center shadow-xs"
+                  className="block w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl text-center shadow-xs transition-smooth hover:scale-[1.02]"
                 >
                   Customer Sign Up
                 </Link>
                 <Link
                   to="/login"
-                  className="block w-full py-2 text-mocha-700 hover:text-mocha-950 text-xs font-semibold text-center hover:bg-mocha-100 rounded-xl"
+                  className="block w-full py-2 text-mocha-700 hover:text-mocha-950 text-xs font-semibold text-center hover:bg-mocha-100/80 rounded-xl transition-smooth"
                 >
                   Customer Login
                 </Link>
@@ -418,22 +422,26 @@ export const LandingPage = () => {
             </div>
 
             {/* Provider Box */}
-            <div className="p-6 rounded-2xl bg-gold-50/60 border border-gold-200 space-y-3 flex flex-col justify-between">
+            <div className="p-6 rounded-3xl bg-gold-50/50 border border-gold-300/80 flex flex-col justify-between h-full shadow-xs">
               <div>
                 <span className="text-2xl">🍳</span>
-                <h3 className="text-base font-serif font-bold text-mocha-950 mt-2">I am a Mess Owner</h3>
-                <p className="text-xs text-mocha-600">Eliminate food waste with automated headcount & collections.</p>
+                <h3 className="text-base font-serif font-bold text-mocha-950 mt-2 h-7 flex items-center">
+                  I am a Mess Owner
+                </h3>
+                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                  Eliminate food waste with automated headcount freezing & zero-dispute billing.
+                </p>
               </div>
-              <div className="space-y-2 pt-3 border-t border-gold-200">
+              <div className="space-y-2.5 pt-4 border-t border-gold-300/80 mt-4">
                 <Link
                   to="/register?role=provider"
-                  className="block w-full py-2 bg-gold-600 hover:bg-gold-700 text-white text-xs font-bold rounded-xl text-center shadow-xs"
+                  className="block w-full py-2.5 bg-gold-600 hover:bg-gold-700 text-white text-xs font-bold rounded-xl text-center shadow-xs transition-smooth hover:scale-[1.02]"
                 >
                   Register Kitchen
                 </Link>
                 <Link
                   to="/login"
-                  className="block w-full py-2 text-gold-900 hover:text-mocha-950 text-xs font-semibold text-center hover:bg-gold-100/60 rounded-xl"
+                  className="block w-full py-2 text-gold-950 hover:text-mocha-950 text-xs font-semibold text-center hover:bg-gold-100/60 rounded-xl transition-smooth"
                 >
                   Provider Login
                 </Link>
@@ -441,22 +449,26 @@ export const LandingPage = () => {
             </div>
 
             {/* Delivery Box */}
-            <div className="p-6 rounded-2xl bg-canvas-subtle/80 border border-mocha-200 space-y-3 flex flex-col justify-between">
+            <div className="p-6 rounded-3xl bg-canvas-subtle/80 border border-mocha-200/90 flex flex-col justify-between h-full shadow-xs">
               <div>
                 <span className="text-2xl">🚴</span>
-                <h3 className="text-base font-serif font-bold text-mocha-950 mt-2">Delivery Partner</h3>
-                <p className="text-xs text-mocha-600">View today's assigned drop checklist and mark deliveries.</p>
+                <h3 className="text-base font-serif font-bold text-mocha-950 mt-2 h-7 flex items-center">
+                  Delivery Partner
+                </h3>
+                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                  View today's assigned drop checklist and mark doorstep deliveries in real-time.
+                </p>
               </div>
-              <div className="space-y-2 pt-3 border-t border-mocha-200">
+              <div className="space-y-2.5 pt-4 border-t border-mocha-200/80 mt-4">
                 <Link
                   to="/login"
-                  className="block w-full py-2.5 bg-mocha-900 hover:bg-mocha-950 text-white text-xs font-bold rounded-xl text-center shadow-xs"
+                  className="block w-full py-2.5 bg-mocha-900 hover:bg-mocha-950 text-white text-xs font-bold rounded-xl text-center shadow-xs transition-smooth hover:scale-[1.02]"
                 >
                   Rider Sign In
                 </Link>
-                <p className="text-[10px] text-mocha-500 text-center italic">
-                  Accounts created by kitchen manager
-                </p>
+                <div className="w-full py-2 text-[11px] text-mocha-500 text-center font-medium bg-mocha-100/50 rounded-xl border border-mocha-200/50">
+                  Accounts managed by kitchen
+                </div>
               </div>
             </div>
           </div>
