@@ -1,0 +1,28 @@
+import http from 'http';
+import { app } from './app.js';
+import { env } from './config/env.js';
+import { connectDB } from './config/db.js';
+import { initSockets } from './sockets/index.js';
+import { initCronJobs } from './jobs/cron.js';
+
+const server = http.createServer(app);
+
+// Initialize WebSocket server
+initSockets(server);
+
+// Start server
+const start = async () => {
+  await connectDB();
+  initCronJobs();
+
+  server.listen(env.PORT, () => {
+    console.log(`[TiffinLoop] 🍱 Server running in ${env.NODE_ENV} mode on port ${env.PORT}`);
+    console.log(`[TiffinLoop] 🚀 Health check: http://localhost:${env.PORT}/api/health`);
+  });
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  start();
+}
+
+export { server };
