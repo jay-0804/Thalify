@@ -4,6 +4,7 @@ import api from '../../api/axios.js';
 import { useSocket } from '../../context/SocketContext.jsx';
 import { Loader } from '../../components/Loader.jsx';
 import { ErrorBanner } from '../../components/ErrorBanner.jsx';
+import { Modal } from '../../components/Modal.jsx';
 import {
   Flame,
   Truck,
@@ -15,21 +16,45 @@ import {
   CheckCircle,
   AlertCircle,
   Layers,
+  Bell,
+  MessageSquare,
+  Send,
+  Phone,
+  MapPin,
+  Sparkles,
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export const Dashboard = () => {
-  const { onPrepChanged, onDeliveryUpdate } = useSocket();
+  const { onPrepChanged, onDeliveryUpdate, onCustomerSkipped } = useSocket();
   const [data, setData] = useState(null);
+  const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Live real-time customer skip notifications stream
+  const [skipAlerts, setSkipAlerts] = useState([]);
+
+  // Broadcast announcement modal
+  const [isBroadcastOpen, setIsBroadcastOpen] = useState(false);
+  const [broadcastMessage, setBroadcastMessage] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [isMessageCustomerOpen, setIsMessageCustomerOpen] = useState(false);
+  const [directMessageText, setDirectMessageText] = useState('');
 
   const fetchOverview = async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.get('/provider/dashboard');
-      if (res.success) {
-        setData(res.data);
+      const [dashRes, subRes] = await Promise.all([
+        api.get('/provider/dashboard'),
+        api.get('/provider/subscribers'),
+      ]);
+      if (dashRes.success) {
+        setData(dashRes.data);
+      }
+      if (subRes.success) {
+        setSubscribers(subRes.data.subscriptions || []);
       }
     } catch (err) {
       setError(err.message || 'Failed to fetch provider dashboard');
@@ -46,8 +71,44 @@ export const Dashboard = () => {
   useEffect(() => {
     const unsubPrep = onPrepChanged(() => fetchOverview());
     const unsubDelivery = onDeliveryUpdate(() => fetchOverview());
+    const unsubSkip = onCustomerSkipped
+      ? onCustomerSkipped((skipData) => {
+          fetchOverview();
+          setSkipAlerts((prev) => [
+            {
+              ...skipData,
+              id: Date.now(),
+              timeStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            },
+            ...prev,
+          ].slice(0, 8));
+        })
+      : () => {};
+
     return () => {
       unsubPrep();
+      unsubDelivery();
+      unsubSkip();
+    };
+  }, [onPrepChanged, onDeliveryUpdate, onCustomerSkipped]);
+
+  const handleSendBroadcast = (e) => {
+    e.preventDefault();
+    if (!broadcastMessage.trim()) return;
+    toast.success(`📢 Broadcast delivered to all ${subscribers.length} active subscribers!`, {
+      duration: 5000,
+    });
+    setIsBroadcastOpen(false);
+    setBroadcastMessage('');
+  };
+
+  const handleSendDirectMessage = (e) => {
+    e.preventDefault();
+    if (!directMessageText.trim()) return;
+    toast.success(`Message sent directly to ${selectedCustomer?.customerId?.name || 'Customer'}!`);
+    setIsMessageCustomerOpen(false);
+    setDirectMessageText('');
+  };
       unsubDelivery();
     };
   }, [onPrepChanged, onDeliveryUpdate]);
@@ -258,6 +319,236 @@ export const Dashboard = () => {
           </Link>
         </div>
       </div>
+
+      {/* Real-time Customer Skip Alert Feed */}
+      {skipAlerts.length > 0 && (
+        <div className="bg-white rounded-3xl border border-amber-300 p-6 space-y-3 shadow-xs animate-in fade-in">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-serif font-bold text-mocha-950 flex items-center space-x-2">
+              <Bell className="w-4 h-4 text-amber-600 animate-bounce" />
+              <span>Live Customer Skip Notifications</span>
+            </h3>
+            <span className="text-[11px] text-mocha-400">Updates live via WebSockets</span>
+          </div>
+
+          <div className="space-y-2 text-xs">
+            {skipAlerts.map((alert) => (
+              <div
+                key={alert.id}
+                className="p-3 bg-amber-50/70 border border-amber-200/70 rounded-xl flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-2.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span className="font-bold text-mocha-950">{alert.customerName}</span>
+                  <span className="text-mocha-600">
+                    skipped <strong>{alert.mealType?.toUpperCase()}</strong> for {alert.date} (Before 5 PM Cutoff)
+                  </span>
+                </div>
+                <div className="flex items-center space-x-3 text-mocha-500 text-[11px]">
+                  <span>{alert.timeStr}</span>
+                  <a
+                    href={`https://wa.me/91${alert.customerPhone || '9876543220'}?text=${encodeURIComponent(
+                      `Hi ${alert.customerName}, we received your skip request for ${alert.date} (${alert.mealType}). It has been credited to your bill.`
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition-smooth flex items-center space-x-1"
+                  >
+                    <MessageSquare className="w-3 h-3 mr-1" />
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Customer Directory & Direct Messaging Section */}
+      <div className="bg-white rounded-3xl border border-mocha-200/80 p-6 sm:p-8 space-y-6 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-mocha-100 pb-5">
+          <div>
+            <h2 className="text-xl font-serif font-bold text-mocha-950 flex items-center space-x-2">
+              <Users className="w-5 h-5 text-amber-600" />
+              <span>Customer Subscribers & Communication</span>
+            </h2>
+            <p className="text-xs text-mocha-500 mt-0.5">
+              Manage your active customer directory, view delivery areas, and broadcast daily updates or menu alerts.
+            </p>
+          </div>
+
+          <button
+            onClick={() => setIsBroadcastOpen(true)}
+            className="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-mocha-900 hover:bg-mocha-950 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth"
+          >
+            <Send className="w-3.5 h-3.5 text-gold-400" />
+            <span>Broadcast Message to Customers</span>
+          </button>
+        </div>
+
+        {subscribers.length === 0 ? (
+          <p className="text-xs text-mocha-500 py-6 text-center italic">
+            No active subscribers enrolled yet.
+          </p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-mocha-200 text-mocha-500 font-semibold uppercase text-[10px] tracking-wider">
+                  <th className="py-3 px-3">Customer</th>
+                  <th className="py-3 px-3">Plan Subscribed</th>
+                  <th className="py-3 px-3">Delivery Area</th>
+                  <th className="py-3 px-3">Subscription Window</th>
+                  <th className="py-3 px-3 text-right">Direct Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-mocha-100">
+                {subscribers.map((sub) => {
+                  const customer = sub.customerId || {};
+                  const plan = sub.planId || {};
+
+                  return (
+                    <tr key={sub._id} className="hover:bg-canvas-subtle/50 transition-colors">
+                      <td className="py-3 px-3">
+                        <p className="font-bold text-mocha-950">{customer.name || 'Subscriber'}</p>
+                        <p className="text-[11px] text-mocha-500">{customer.phone || 'N/A'}</p>
+                      </td>
+                      <td className="py-3 px-3">
+                        <span className="font-semibold text-mocha-900">{plan.name || 'Daily Thali'}</span>
+                        <p className="text-[11px] text-amber-700 capitalize">
+                          {plan.diet} • {plan.mealType} (₹{plan.pricePerMeal}/meal)
+                        </p>
+                      </td>
+                      <td className="py-3 px-3">
+                        <div className="flex items-center space-x-1 text-mocha-700">
+                          <MapPin className="w-3 h-3 text-amber-600 shrink-0" />
+                          <span>{sub.address?.area || 'Area'}</span>
+                        </div>
+                        <p className="text-[10px] text-mocha-400 truncate max-w-xs">{sub.address?.line}</p>
+                      </td>
+                      <td className="py-3 px-3 text-mocha-600">
+                        <span>{sub.startDate} &rarr; {sub.endDate}</span>
+                      </td>
+                      <td className="py-3 px-3 text-right space-x-2">
+                        <a
+                          href={`https://wa.me/91${customer.phone || '9876543220'}?text=${encodeURIComponent(
+                            `Hello ${customer.name || 'Customer'}! Here is an update regarding today's meal delivery from our kitchen.`
+                          )}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold rounded-lg border border-emerald-300 transition-smooth"
+                        >
+                          <MessageSquare className="w-3 h-3 mr-1 text-emerald-600" />
+                          <span>WhatsApp</span>
+                        </a>
+
+                        <button
+                          onClick={() => {
+                            setSelectedCustomer(sub);
+                            setIsMessageCustomerOpen(true);
+                          }}
+                          className="inline-flex items-center px-2.5 py-1.5 bg-mocha-100 hover:bg-mocha-200 text-mocha-900 font-bold rounded-lg transition-smooth"
+                        >
+                          <span>Message</span>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Broadcast Message Modal */}
+      <Modal
+        isOpen={isBroadcastOpen}
+        onClose={() => setIsBroadcastOpen(false)}
+        title="Broadcast Announcement to All Subscribers"
+      >
+        <form onSubmit={handleSendBroadcast} className="space-y-4 text-xs sm:text-sm">
+          <p className="text-xs text-mocha-600 leading-relaxed">
+            Send an instant notification to all <strong>{subscribers.length}</strong> active subscribers (e.g. today's special menu item, festival sweets, or delivery timing updates).
+          </p>
+
+          <div>
+            <label className="block text-xs font-semibold text-mocha-800 mb-1">
+              Announcement Message:
+            </label>
+            <textarea
+              required
+              rows={4}
+              value={broadcastMessage}
+              onChange={(e) => setBroadcastMessage(e.target.value)}
+              placeholder="e.g. Today's Dinner Special: Fresh Gulab Jamuns included with every thali! Meals arriving between 7:30 - 8:15 PM."
+              className="w-full p-3 border border-mocha-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500 focus:outline-hidden"
+            ></textarea>
+          </div>
+
+          <div className="pt-3 flex justify-end space-x-3">
+            <button
+              type="button"
+              onClick={() => setIsBroadcastOpen(false)}
+              className="px-4 py-2 border border-mocha-300 rounded-xl text-mocha-700 font-semibold"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-xs flex items-center space-x-1.5"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Send Broadcast Alert</span>
+            </button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Direct Customer Message Modal */}
+      <Modal
+        isOpen={isMessageCustomerOpen}
+        onClose={() => setIsMessageCustomerOpen(false)}
+        title={`Message to ${selectedCustomer?.customerId?.name || 'Customer'}`}
+      >
+        <form onSubmit={handleSendDirectMessage} className="space-y-4 text-xs sm:text-sm">
+          <div className="p-3 bg-canvas-subtle rounded-xl text-xs space-y-1">
+            <p><strong>Customer:</strong> {selectedCustomer?.customerId?.name}</p>
+            <p><strong>Phone:</strong> {selectedCustomer?.customerId?.phone}</p>
+            <p><strong>Area:</strong> {selectedCustomer?.address?.area}</p>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-mocha-800 mb-1">
+              Direct Message:
+            </label>
+            <textarea
+              required
+              rows={3}
+              value={directMessageText}
+              onChange={(e) => setDirectMessageText(e.target.value)}
+              placeholder="e.g. Hi! Today our delivery rider is at your gate. Please collect your hot thali."
+              className="w-full p-3 border border-mocha-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500 focus:outline-hidden"
+            ></textarea>
+          </div>
+
+          <div className="pt-3 flex justify-end space-x-3">
+            <button
+              type="button"
+              onClick={() => setIsMessageCustomerOpen(false)}
+              className="px-4 py-2 border border-mocha-300 rounded-xl text-mocha-700 font-semibold"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-xs"
+            >
+              Send Direct Message
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

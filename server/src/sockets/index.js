@@ -100,3 +100,11 @@ export const emitPrepChanged = (providerId, data = {}) => {
   if (!io || !providerId) return;
   io.to(`provider:${providerId}`).emit('prep:changed', data);
 };
+
+/**
+ * Emit customer:skipped alert to provider room
+ */
+export const emitCustomerSkipAlert = (providerId, data = {}) => {
+  if (!io || !providerId) return;
+  io.to(`provider:${providerId}`).emit('customer:skipped', data);
+};

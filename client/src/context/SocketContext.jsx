@@ -9,7 +9,7 @@ export const SocketProvider = ({ children }) => {
   const { token, user } = useAuth();
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
-  const listenersRef = useRef({ delivery: new Set(), prep: new Set() });
+  const listenersRef = useRef({ delivery: new Set(), prep: new Set(), skip: new Set() });
 
   useEffect(() => {
     if (!token) {
@@ -73,6 +73,27 @@ export const SocketProvider = ({ children }) => {
       });
     });
 
+    // Real-time customer skip event listener for providers
+    newSocket.on('customer:skipped', (data) => {
+      console.log('[Socket] customer:skipped received', data);
+      toast(`🔔 ${data.customerName || 'A customer'} skipped ${data.mealType || 'meal'} for ${data.date}`, {
+        icon: 'ℹ️',
+        duration: 6000,
+        style: {
+          background: '#2E1C13',
+          color: '#FAF6F2',
+          border: '1px solid #D4AF37',
+        },
+      });
+      listenersRef.current.skip.forEach((cb) => {
+        try {
+          cb(data);
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    });
+
     setSocket(newSocket);
 
     return () => {
@@ -90,8 +111,15 @@ export const SocketProvider = ({ children }) => {
     return () => listenersRef.current.prep.delete(callback);
   };
 
+  const onCustomerSkipped = (callback) => {
+    listenersRef.current.skip.add(callback);
+    return () => listenersRef.current.skip.delete(callback);
+  };
+
   return (
-    <SocketContext.Provider value={{ socket, isConnected, onDeliveryUpdate, onPrepChanged }}>
+    <SocketContext.Provider
+      value={{ socket, isConnected, onDeliveryUpdate, onPrepChanged, onCustomerSkipped }}
+    >
       {children}
     </SocketContext.Provider>
   );

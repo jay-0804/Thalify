@@ -2,6 +2,7 @@ import { Subscription } from '../models/Subscription.model.js';
 import { Plan } from '../models/Plan.model.js';
 import { Provider } from '../models/Provider.model.js';
 import { MealInstance } from '../models/MealInstance.model.js';
+import { MenuItem } from '../models/MenuItem.model.js';
 import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import {
@@ -138,19 +139,36 @@ export const getSubscriptionDetail = asyncHandler(async (req, res) => {
   const today = getTodayIST();
   const next14Days = addDaysIST(today, 14);
 
-  const meals = await MealInstance.find({
-    subscriptionId: subscription._id,
-    date: { $gte: today, $lte: next14Days },
-  }).sort({ date: 1, mealType: 1 }).lean();
+  const providerId = subscription.providerId?._id || subscription.providerId;
 
-  const cutoffTime = subscription.providerId?.cutoffTime || '20:00';
+  const [meals, menuItems] = await Promise.all([
+    MealInstance.find({
+      subscriptionId: subscription._id,
+      date: { $gte: today, $lte: next14Days },
+    }).sort({ date: 1, mealType: 1 }).lean(),
+    MenuItem.find({
+      providerId,
+      date: { $gte: today, $lte: next14Days },
+    }).lean(),
+  ]);
 
-  // Attach canSkip and skipDeadline to each meal for UI convenience (BR-4)
+  // Index menu dishes by date and mealType
+  const menuMap = new Map();
+  menuItems.forEach((m) => {
+    menuMap.set(`${m.date}_${m.mealType}`, m.dishes || []);
+  });
+
+  const cutoffTime = subscription.providerId?.cutoffTime || '17:00';
+
+  // Attach canSkip, canUnskip, dishes, and skipDeadline to each meal for UI convenience (BR-4)
   const mealsWithCutoff = meals.map((meal) => {
     const statusInfo = checkCutoffStatus(meal.date, cutoffTime);
+    const dishes = menuMap.get(`${meal.date}_${meal.mealType}`) || [];
     return {
       ...meal,
+      dishes,
       canSkip: statusInfo.canSkip && meal.status === 'scheduled',
+      canUnskip: statusInfo.canSkip && meal.status === 'skipped' && meal.skipReason === 'user',
       skipDeadline: statusInfo.deadlineIST,
     };
   });

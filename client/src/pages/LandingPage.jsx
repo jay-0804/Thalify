@@ -125,7 +125,7 @@ export const LandingPage = () => {
                 <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   North Indian Homestyle
                 </h3>
-                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                <p className="text-xs text-mocha-600 leading-relaxed min-h-[56px]">
                   Slow-cooked dal makhani, tender paneer, phulkas with desi ghee, jeera rice & seasonal sabzi.
                 </p>
               </div>
@@ -156,7 +156,7 @@ export const LandingPage = () => {
                 <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   Traditional South Indian
                 </h3>
-                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                <p className="text-xs text-mocha-600 leading-relaxed min-h-[56px]">
                   Steamed Sona Masoori, drumstick sambar, soothing pepper rasam, seasonal poriyal & curd.
                 </p>
               </div>
@@ -187,7 +187,7 @@ export const LandingPage = () => {
                 <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   Fitness & Gym Meals
                 </h3>
-                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                <p className="text-xs text-mocha-600 leading-relaxed min-h-[56px]">
                   Macro-counted grilled paneer or chicken, boiled eggs, brown rice, whole lentils & fresh salad.
                 </p>
               </div>
@@ -218,7 +218,7 @@ export const LandingPage = () => {
                 <h3 className="text-base font-serif font-bold text-mocha-950 h-7 flex items-center">
                   Pure Satvik & Jain
                 </h3>
-                <p className="text-xs text-mocha-600 leading-relaxed h-12 overflow-hidden">
+                <p className="text-xs text-mocha-600 leading-relaxed min-h-[56px]">
                   Sanctified kitchens with no root vegetables, light on digestion, prepared fresh each morning.
                 </p>
               </div>

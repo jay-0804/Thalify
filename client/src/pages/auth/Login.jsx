@@ -105,30 +105,62 @@ export const Login = () => {
           </button>
 
           {showDemoCredentials && (
-            <div className="mt-3 p-3 bg-canvas-subtle rounded-xl border border-mocha-200/80 space-y-2 text-xs animate-in fade-in">
-              <p className="text-[11px] text-mocha-600">Click to autofill test credentials (Password: <code className="bg-white px-1 py-0.5 rounded font-bold">Demo@1234</code>):</p>
-              <div className="grid grid-cols-3 gap-1.5 text-center">
-                <button
-                  type="button"
-                  onClick={() => handleFillCredentials('customer@demo.com')}
-                  className="p-1.5 bg-white hover:bg-gold-50 border border-mocha-200 rounded-lg text-[11px] font-semibold text-mocha-900 shadow-2xs"
-                >
-                  👤 Customer
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleFillCredentials('provider@demo.com')}
-                  className="p-1.5 bg-white hover:bg-gold-50 border border-mocha-200 rounded-lg text-[11px] font-semibold text-mocha-900 shadow-2xs"
-                >
-                  🍳 Kitchen
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleFillCredentials('delivery@demo.com')}
-                  className="p-1.5 bg-white hover:bg-gold-50 border border-mocha-200 rounded-lg text-[11px] font-semibold text-mocha-900 shadow-2xs"
-                >
-                  🚴 Rider
-                </button>
+            <div className="mt-3 p-3.5 bg-canvas-subtle rounded-2xl border border-mocha-200/80 space-y-3 text-xs animate-in fade-in">
+              <p className="text-[11px] text-mocha-600">
+                Click any account to autofill credentials (Password: <code className="bg-white px-1.5 py-0.5 rounded font-bold border border-mocha-200">Demo@1234</code>):
+              </p>
+
+              {/* Standard Roles */}
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase font-bold text-mocha-500 tracking-wider">Default Roles</span>
+                <div className="grid grid-cols-2 gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => handleFillCredentials('customer@demo.com')}
+                    className="p-2 bg-white hover:bg-gold-50/70 border border-mocha-200 rounded-xl text-left text-[11px] font-semibold text-mocha-900 shadow-2xs flex items-center justify-between"
+                  >
+                    <span>👤 Rohan Sharma (Customer)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleFillCredentials('delivery@demo.com')}
+                    className="p-2 bg-white hover:bg-gold-50/70 border border-mocha-200 rounded-xl text-left text-[11px] font-semibold text-mocha-900 shadow-2xs flex items-center justify-between"
+                  >
+                    <span>🚴 Ramesh Kumar (Rider)</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 8 Kitchen Partner Accounts */}
+              <div className="space-y-1 pt-1 border-t border-mocha-200/60">
+                <span className="text-[10px] uppercase font-bold text-amber-800 tracking-wider">
+                  Kitchen Partners (8 Neighborhood Messes)
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                  {[
+                    { name: 'Maa Ki Rasoi', email: 'provider@demo.com', desc: 'North Indian • Koramangala/HSR' },
+                    { name: 'Annapurna Homely Mess', email: 'annapurna@demo.com', desc: 'South Indian • BTM/Jayanagar' },
+                    { name: 'Campus Mess Co', email: 'campus@demo.com', desc: 'Student Specials • Whitefield' },
+                    { name: 'Shuddh Satvik Rasoi', email: 'satvik@demo.com', desc: 'Jain / Pure Satvik • HSR' },
+                    { name: 'NutriFit Clean Fuel', email: 'nutrifit@demo.com', desc: 'High Protein Gym • Koramangala' },
+                    { name: "Bramhin's Heritage", email: 'heritage@demo.com', desc: 'Udupi Oota • Jayanagar' },
+                    { name: 'Whitefield Chef Table', email: 'whitefieldchef@demo.com', desc: 'Executive Tiffin • Whitefield' },
+                    { name: 'Dakshin Daily Meals', email: 'dakshin@demo.com', desc: 'Chettinad & Malabar • Indiranagar' },
+                  ].map((k) => (
+                    <button
+                      key={k.email}
+                      type="button"
+                      onClick={() => handleFillCredentials(k.email)}
+                      className="p-2 bg-white hover:bg-amber-50/80 border border-mocha-200 rounded-xl text-left text-[11px] text-mocha-900 shadow-2xs hover:border-amber-300 transition-colors"
+                    >
+                      <p className="font-bold flex items-center">
+                        <span className="mr-1">🍳</span>
+                        <span>{k.name}</span>
+                      </p>
+                      <p className="text-[10px] text-mocha-500 truncate">{k.desc}</p>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}

@@ -201,7 +201,7 @@ export const SubscriptionDetail = () => {
   if (!data) return null;
 
   const { subscription, meals } = data;
-  const cutoffTime = subscription.providerId?.cutoffTime || '20:00';
+  const cutoffTime = subscription.providerId?.cutoffTime || '17:00';
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -343,6 +343,23 @@ export const SubscriptionDetail = () => {
                       Snapshotted Price: <strong className="text-mocha-900">₹{meal.price}</strong>
                     </p>
                   </div>
+
+                  {/* Daily Thali Menu Dishes */}
+                  <div className="p-3 bg-canvas-subtle/90 rounded-xl border border-mocha-200/70 text-xs space-y-1">
+                    <p className="text-[10px] uppercase font-bold text-amber-700 tracking-wider flex items-center">
+                      <Flame className="w-3 h-3 mr-1 text-amber-600" />
+                      Daily Thali Items
+                    </p>
+                    {meal.dishes && meal.dishes.length > 0 ? (
+                      <p className="text-mocha-800 font-medium leading-relaxed">
+                        {meal.dishes.join(' • ')}
+                      </p>
+                    ) : (
+                      <p className="text-mocha-500 italic text-[11px]">
+                        Fresh homestyle daily cook (Dal, Seasonal Sabzi, Roti & Rice)
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 {/* Bottom Action Section */}
@@ -352,34 +369,40 @@ export const SubscriptionDetail = () => {
                       <button
                         onClick={() => handleSkip(meal._id)}
                         disabled={isActionBusy}
-                        className="w-full py-1.5 px-3 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-xs transition-smooth"
+                        className="w-full py-2 px-3 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth"
                       >
-                        {isActionBusy ? 'Processing...' : 'Skip This Meal'}
+                        {isActionBusy ? 'Processing...' : 'Skip This Meal (Credit Rupee)'}
                       </button>
                     ) : (
                       <div className="w-full text-center">
                         <span
                           title={`Cutoff was: ${meal.skipDeadline}`}
-                          className="inline-flex items-center justify-center w-full py-1.5 px-3 bg-gray-100 text-gray-400 text-xs font-medium rounded-lg cursor-not-allowed border border-gray-200"
+                          className="inline-flex items-center justify-center w-full py-2 px-3 bg-gray-100 text-gray-400 text-xs font-medium rounded-xl cursor-not-allowed border border-gray-200"
                         >
                           <Clock className="w-3 h-3 mr-1 text-gray-400" />
-                          Cutoff Passed
+                          Cutoff Passed (5:00 PM)
                         </span>
                       </div>
                     )
                   ) : meal.status === 'skipped' && meal.skipReason === 'user' ? (
-                    meal.canSkip ? (
+                    meal.canUnskip ? (
                       <button
                         onClick={() => handleUnskip(meal._id)}
                         disabled={isActionBusy}
-                        className="w-full py-1.5 px-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-xs transition-smooth"
+                        className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth"
                       >
-                        {isActionBusy ? 'Processing...' : 'Undo Skip'}
+                        {isActionBusy ? 'Processing...' : 'Undo Skip (Before 5 PM)'}
                       </button>
                     ) : (
-                      <span className="text-[11px] text-mocha-400 italic mx-auto">
-                        Skipped (Locked)
-                      </span>
+                      <div className="w-full text-center">
+                        <span
+                          title="Cannot undo skip after 5:00 PM cutoff"
+                          className="inline-flex items-center justify-center w-full py-2 px-3 bg-mocha-100/60 text-mocha-500 text-xs font-medium rounded-xl border border-mocha-200"
+                        >
+                          <Clock className="w-3 h-3 mr-1 text-mocha-400" />
+                          Cutoff Passed — Cannot Undo
+                        </span>
+                      </div>
                     )
                   ) : meal.status === 'delivered' ? (
                     <span className="text-xs font-semibold text-emerald-700 flex items-center justify-center w-full">
