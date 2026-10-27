@@ -1,7 +1,22 @@
-# Thalify
+# Thalify: Your daily meals, on your terms.
 
-> **Your daily meals, on your terms.**  
-> An enterprise-grade meal subscription and kitchen prep orchestration platform designed for daily tiffin services, PG messes, and home kitchens. Eliminates paper notebook disputes through server-authoritative cutoff enforcement, derived billing, real-time WebSocket dispatch, and integrated online payments.
+<div align="center">
+
+![Node.js](https://img.shields.io/badge/Node.js-v18+-68a063?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-4.x-black?style=for-the-badge&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-5.x-646cff?style=for-the-badge&logo=vite&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas%20%2F%20Local-47a248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Socket.io](https://img.shields.io/badge/Socket.io-WebSockets-010101?style=for-the-badge&logo=socket.io&logoColor=white)
+![Razorpay](https://img.shields.io/badge/Razorpay-Integrated-0c2340?style=for-the-badge&logo=razorpay&logoColor=white)
+![Tests](https://img.shields.io/badge/Acceptance%20Tests-18%2F18%20Passed%20(100%25)-brightgreen?style=for-the-badge)
+
+<p align="center">
+  <strong>An enterprise-grade subscription and kitchen prep orchestration platform designed for daily tiffin services, PG messes, and home kitchens.</strong><br>
+  Eliminates paper notebook disputes through server-authoritative cutoff enforcement, derived billing, real-time WebSocket dispatch, and integrated online payments.
+</p>
+
+</div>
 
 ---
 
@@ -48,12 +63,12 @@ Despite being a multi-billion-rupee daily essential services economy, over **90%
 
 ---
 
-## 3. Key Product Features & Workflows
+## 3. Key Product Features & Core Workflows
 
 ### 👤 1. Customer Subscription & Meal Calendar
 - **Interactive 3D Brass Thali Showcase:** Interactive 3D brass thali preview displaying authentic regional dishes (Dal Makhani, Shahi Paneer, Phulkas, Basmati Rice, Gulab Jamun).
 - **Curated Kitchen Exploration:** Browse and filter verified home kitchens across Koramangala, HSR Layout, Whitefield, BTM Layout, and Jayanagar with cuisine tags (North Indian, South Indian, Pure Jain & Satvik, High-Protein Gym Fuel).
-- **14-Day Rolling Meal Calendar:** View daily meals with dish breakdowns (*e.g., Paneer Butter Masala • Yellow Dal Tadka • Desi Ghee Phulkas*).
+- **7-Day Revolving Daily Menu Explorer:** View daily menus organized strictly by calendar date in a unified day box showing both **☀️ Lunch** and **🌙 Dinner** together.
 - **Cutoff-Enforced Skip & Undo (BR-4):** Skip any upcoming meal before 5:00 PM IST with 1-click credits. Undo any skip before 5:00 PM; strictly locked with `409 CUTOFF_PASSED` after 5:00 PM.
 - **Vacation Mode (Pause / Resume):** Bulk-pause up to 30 days of upcoming meals without manual daily toggling.
 - **Integrated Razorpay Payments:** Clear outstanding balances with live UPI/Card checkout, overpayment prevention guards, and instant receipts.
@@ -63,7 +78,7 @@ Despite being a multi-billion-rupee daily essential services economy, over **90%
 - **Printable Kitchen Order Ticket (KOT):** 1-click print-optimized KOT for kitchen cooks.
 - **Live WebSocket Customer Skip Feed:** Real-time push alert notifies the chef the instant a subscriber skips a meal.
 - **Customer Subscriber Directory:** Complete directory of active subscribers with 1-click direct WhatsApp messaging and broadcast announcements.
-- **Custom Cutoff Deadlines & Rotating Menus:** Configure delivery sectors, custom cutoffs, and 7-day rolling menus.
+- **Custom Cutoff Deadlines & Rotating Menus:** Configure delivery sectors, custom cutoffs, and 7-day rolling menus organized by date.
 
 ### 🚴 3. Delivery Route Dispatch Board
 - **Sector Route Grouping:** Daily delivery tasks automatically clustered by neighborhood (Koramangala, HSR, BTM).
@@ -130,7 +145,53 @@ Despite being a multi-billion-rupee daily essential services economy, over **90%
 
 ---
 
-## 5. Core Engineering Decisions
+## 5. Data Model & Entity Relationships
+
+The database architecture is designed with MongoDB compound unique indexes to guarantee idempotency and referential integrity:
+
+```
+┌──────────────┐         1:1         ┌──────────────────┐
+│     User     │ ──────────────────> │     Provider     │
+│ (Auth & Role)│                     │  (Kitchen Info)  │
+└──────┬───────┘                     └────────┬─────────┘
+       │                                      │ 1:N
+       │ 1:N                                  ▼
+       │                             ┌──────────────────┐
+       │                             │       Plan       │
+       │                             │(Pricing & Diet)  │
+       │                             └────────┬─────────┘
+       ▼                                      │
+┌──────────────┐         1:N                  │ 1:N
+│ Subscription │ <────────────────────────────┘
+│ (Active Term)│
+└──────┬───────┘
+       │
+       │ 1:N Materialized
+       ▼
+┌────────────────────────────────────────────────────────┐
+│                      MealInstance                      │
+│ • date (YYYY-MM-DD)                                    │
+│ • mealType ('lunch' | 'dinner')                        │
+│ • status ('scheduled' | 'skipped' | 'delivered' | 'failed')
+│ • price (Snapshotted integer)                          │
+│ • billable (boolean derived flag)                      │
+│ Compound Index: { subscriptionId: 1, date: 1, mealType: 1 } (Unique)
+└──────┬─────────────────────────────────────────────────┘
+       │
+       │ 1:1 (When offset = 0)
+       ▼
+┌──────────────────────────────┐          ┌─────────────────────────────┐
+│         DeliveryTask         │          │           Payment           │
+│ • assignedTo (Rider User ID) │          │ • subscriptionId            │
+│ • status ('pending'|'done')  │          │ • month (YYYY-MM)           │
+│ • failureReason              │          │ • amount (in INR)           │
+└──────────────────────────────┘          │ • razorpayPaymentId         │
+                                          └─────────────────────────────┘
+```
+
+---
+
+## 6. Core Engineering Decisions & Application Logic
 
 ### 1. Server-Authoritative Cutoff Enforcement (BR-4)
 - **The Pitfall:** Validating meal cancellation deadlines on the client device allows users to bypass rules by altering device clocks or submitting recorded API packets.
@@ -169,23 +230,82 @@ Despite being a multi-billion-rupee daily essential services economy, over **90%
 
 ---
 
-## 6. Role-Based Access Control (RBAC) Matrix
+## 7. Edge Cases & Failure Handling Matrix
 
-| Endpoint Route | Customer | Kitchen Owner (Provider) | Delivery Staff | Public |
-| :--- | :---: | :---: | :---: | :---: |
-| `GET /api/providers` (Browse Kitchens) | ✅ | ✅ | ✅ | ✅ |
-| `POST /api/subscriptions` (Subscribe) | ✅ | ❌ | ❌ | ❌ |
-| `PATCH /api/meals/:id/skip` (Skip Meal) | ✅ (Owner) | ❌ | ❌ | ❌ |
-| `PATCH /api/meals/:id/undo-skip` | ✅ (Owner) | ❌ | ❌ | ❌ |
-| `POST /api/billing/razorpay/order` | ✅ | ❌ | ❌ | ❌ |
-| `GET /api/provider/prep` (Headcount) | ❌ | ✅ (Owner) | ❌ | ❌ |
-| `GET /api/provider/delivery/today` | ❌ | ✅ (Owner) | ❌ | ❌ |
-| `PATCH /api/delivery/tasks/:id` | ❌ | ❌ | ✅ (Assigned) | ❌ |
-| `POST /api/provider/staff` (Provision Rider) | ❌ | ✅ (Owner) | ❌ | ❌ |
+| Real-World Edge Case | Potential Point of Failure | Thalify Architectural Defense | Result Code |
+| :--- | :--- | :--- | :--- |
+| **Late Skip Attempt** | Customer tries to skip dinner at 6:30 PM after groceries are bought. | Server evaluates `Asia/Kolkata` time against 5:00 PM cutoff deadline. | `409 CUTOFF_PASSED` |
+| **Simultaneous Double-Skip** | User double-clicks or triggers requests from two devices simultaneously. | Atomic MongoDB `findOneAndUpdate` filtering `{ status: 'scheduled' }`. | `409 INVALID_STATE` |
+| **Tampering with Finalized Drop** | Rider attempts to re-mark a delivered drop as failed later. | Terminal state lock prevents mutation once marked delivered or failed. | `409 ALREADY_FINALIZED` |
+| **Unauthorized Rider Mutation** | Delivery staff tries to update a drop assigned to another rider. | Resource ownership validation enforces `task.assignedTo === user._id`. | `403 FORBIDDEN` |
+| **Subscribing in the Past** | User submits a past date for subscription start. | Validation middleware checks `startDate >= getTodayIST()`. | `400 VALIDATION_ERROR` |
+| **Duplicate Overlapping Subscriptions**| User creates two active subscriptions to the same meal slot. | Unique constraint check checks overlapping date ranges. | `409 DUPLICATE_SUBSCRIPTION` |
+| **Accidental Overpayment** | Customer initiates payment larger than current unpaid balance. | Pre-order calculation verifies `amount <= currentBill.balance`. | `409 OVERPAYMENT` |
+| **Atlas Network IP Block** | Cloud Atlas restricts IP address changes. | Resilient Dual-Engine boots local Mongo and auto-seeds ecosystem. | Zero downtime fallback |
 
 ---
 
-## 7. Local Setup & Quick Start
+## 8. Role-Based Access Control (RBAC) & API Specification
+
+| HTTP Method | Route Endpoint | Access Level | Description & Core Logic |
+| :--- | :--- | :---: | :--- |
+| `POST` | `/api/auth/register` | Public | Register customer or kitchen provider (delivery role blocked) |
+| `POST` | `/api/auth/login` | Public | Authenticate user, issue signed JWT token with role claims |
+| `GET` | `/api/providers` | Public | List verified neighborhood kitchens with area and cuisine filters |
+| `GET` | `/api/providers/:id` | Public | Get kitchen profile, active meal plans, and 7-day revolving menu |
+| `POST` | `/api/subscriptions` | Customer | Create recurring subscription, materialize rolling `MealInstance` records |
+| `GET` | `/api/subscriptions/mine`| Customer | Retrieve customer's active and historical meal subscriptions |
+| `PATCH`| `/api/meals/:id/skip` | Customer (Owner) | Cancel upcoming meal before 5:00 PM IST; credit user account |
+| `PATCH`| `/api/meals/:id/undo-skip` | Customer (Owner) | Restore skipped meal back to scheduled before 5:00 PM IST cutoff |
+| `POST` | `/api/billing/razorpay/order` | Customer | Create verified Razorpay order with overpayment balance guard |
+| `POST` | `/api/billing/razorpay/verify`| Customer | Cryptographically verify signature, log receipt, update ledger |
+| `GET` | `/api/provider/prep` | Provider (Owner)| Real-time kitchen headcount aggregation grouped by diet and slot |
+| `GET` | `/api/provider/delivery/today` | Provider (Owner)| Retrieve today's delivery tasks clustered by neighborhood sector |
+| `POST` | `/api/provider/delivery/generate` | Provider (Owner)| Idempotently generate delivery tasks for today's active drops |
+| `PATCH`| `/api/delivery/tasks/:id` | Delivery Rider | Update drop status (`delivered` vs `failed`) with terminal lock |
+
+---
+
+## 9. Project Directory Structure
+
+```
+Thalify/
+├── client/                        # Frontend Single-Page Application (React 18 + Vite)
+│   ├── src/
+│   │   ├── api/                   # Axios client with JWT interceptors
+│   │   ├── components/            # Reusable UI (Navbar, Modal, Loader, Thali3DShowcase)
+│   │   ├── context/               # AuthContext (RBAC) & SocketContext (WebSockets)
+│   │   ├── pages/
+│   │   │   ├── auth/              # Production Sign In & Register views
+│   │   │   ├── customer/          # Browse Kitchens, Provider Detail, Meal Calendar, Billing
+│   │   │   ├── provider/          # Kitchen Operations Dashboard, Prep Engine, Dispatch, Menu
+│   │   │   └── delivery/          # Mobile Rider Drop Board
+│   │   ├── App.jsx                # React Router v6 routing hierarchy
+│   │   └── index.css              # Tailwind CSS configuration with smooth scroll
+│   └── package.json
+│
+├── server/                        # Backend REST & WebSocket Gateway (Node.js + Express ESM)
+│   ├── src/
+│   │   ├── config/                # Environment config & Dual-Engine database connector
+│   │   ├── controllers/           # Lightweight HTTP request orchestrators
+│   │   ├── middleware/            # JWT authentication, role guards (RBAC), error handler
+│   │   ├── models/                # Mongoose schemas (User, Provider, Plan, MealInstance, etc.)
+│   │   ├── routes/                # Route definitions mapped by resource domain
+│   │   ├── seed/                  # Seeding helper for 8 kitchens, menus, and accounts
+│   │   ├── services/              # Pure business logic (Cutoff, Billing, Prep, Delivery)
+│   │   ├── sockets/               # Real-time WebSocket pub/sub event emitters
+│   │   └── server.js              # HTTP server & cron scheduler entry point
+│   ├── tests/
+│   │   └── acceptance.test.js     # Comprehensive automated acceptance test suite
+│   └── package.json
+│
+├── DEMO_SCRIPT.md                 # Verbatim 3–5 minute video demonstration script
+└── README.md                      # Complete system documentation
+```
+
+---
+
+## 10. Local Setup & Quick Start
 
 ### Prerequisites
 - Node.js >= v18.0.0
@@ -246,7 +366,7 @@ Open your browser at: **`http://localhost:5173`**
 
 ---
 
-## 8. Automated Acceptance Test Suite (18/18 Passing)
+## 11. Automated Acceptance Test Suite (18/18 Passing)
 
 Thalify includes an automated acceptance test suite in `server/tests/acceptance.test.js`:
 
