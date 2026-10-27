@@ -2,7 +2,7 @@ services:
   # Backend API Gateway Service
   - type: web
     name: thalify-backend
-    env: node
+    runtime: node
     plan: free
     rootDir: server
     buildCommand: npm install
@@ -17,13 +17,11 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
-      - key: CLIENT_URL
-        value: https://thalify.vercel.app
 
   # Frontend Web Application (Static Site)
   - type: web
     name: thalify-frontend
-    env: static
+    runtime: static
     plan: free
     rootDir: client
     buildCommand: npm install && npm run build
