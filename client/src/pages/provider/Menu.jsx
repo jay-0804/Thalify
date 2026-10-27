@@ -14,6 +14,28 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+// Safe date formatting helper to prevent any invalid date crashes
+const formatDateSafe = (dateStr, options) => {
+  if (!dateStr) return '';
+  try {
+    const clean = String(dateStr).slice(0, 10);
+    const parts = clean.split('-');
+    if (parts.length === 3) {
+      const y = parseInt(parts[0], 10);
+      const m = parseInt(parts[1], 10) - 1;
+      const d = parseInt(parts[2], 10);
+      const dt = new Date(y, m, d);
+      if (!isNaN(dt.getTime())) {
+        return dt.toLocaleDateString('en-IN', options);
+      }
+    }
+    const dt = new Date(dateStr);
+    return isNaN(dt.getTime()) ? String(dateStr) : dt.toLocaleDateString('en-IN', options);
+  } catch {
+    return String(dateStr);
+  }
+};
+
 export const Menu = () => {
   const [plans, setPlans] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
@@ -308,9 +330,7 @@ export const Menu = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {groupedMenuItems.map((dayGroup) => {
-              const [y, m, d] = dayGroup.date.split('-').map(Number);
-              const dateObj = new Date(y, m - 1, d);
-              const formattedDate = dateObj.toLocaleDateString('en-IN', {
+              const formattedDate = formatDateSafe(dayGroup.date, {
                 weekday: 'short',
                 day: 'numeric',
                 month: 'short',

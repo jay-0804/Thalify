@@ -17,6 +17,28 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+// Safe date formatting helper to prevent any invalid date crashes
+const formatDateSafe = (dateStr, options) => {
+  if (!dateStr) return '';
+  try {
+    const clean = String(dateStr).slice(0, 10);
+    const parts = clean.split('-');
+    if (parts.length === 3) {
+      const y = parseInt(parts[0], 10);
+      const m = parseInt(parts[1], 10) - 1;
+      const d = parseInt(parts[2], 10);
+      const dt = new Date(y, m, d);
+      if (!isNaN(dt.getTime())) {
+        return dt.toLocaleDateString('en-IN', options);
+      }
+    }
+    const dt = new Date(dateStr);
+    return isNaN(dt.getTime()) ? String(dateStr) : dt.toLocaleDateString('en-IN', options);
+  } catch {
+    return String(dateStr);
+  }
+};
+
 export const ProviderDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -267,10 +289,8 @@ export const ProviderDetail = () => {
             <div className="flex items-center space-x-2.5 overflow-x-auto pb-2 scrollbar-thin">
               {groupedMenu.map((dayGroup) => {
                 const isSelected = activeDateData?.date === dayGroup.date;
-                const [y, m, d] = dayGroup.date.split('-').map(Number);
-                const dateObj = new Date(y, m - 1, d);
-                const dayName = dateObj.toLocaleDateString('en-IN', { weekday: 'short' });
-                const dayNum = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+                const dayName = formatDateSafe(dayGroup.date, { weekday: 'short' });
+                const dayNum = formatDateSafe(dayGroup.date, { day: 'numeric', month: 'short' });
                 const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
                 const isToday = dayGroup.date === todayStr;
 
@@ -306,15 +326,12 @@ export const ProviderDetail = () => {
                         : 'Scheduled Day Menu'}
                     </span>
                     <h3 className="text-lg font-serif font-extrabold text-mocha-950">
-                      {(() => {
-                        const [y, m, d] = activeDateData.date.split('-').map(Number);
-                        return new Date(y, m - 1, d).toLocaleDateString('en-IN', {
-                          weekday: 'long',
-                          day: 'numeric',
-                          month: 'long',
-                          year: 'numeric',
-                        });
-                      })()}
+                      {formatDateSafe(activeDateData.date, {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
                     </h3>
                   </div>
 

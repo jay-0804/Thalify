@@ -50,6 +50,7 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 app.use(mongoSanitize());
 
 // API Routes mounting
+app.use('/health', healthRoutes);
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/providers', publicRoutes);
