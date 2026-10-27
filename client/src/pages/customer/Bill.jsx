@@ -176,7 +176,7 @@ export const Bill = () => {
 
   if (loading) return <Loader message="Calculating itemized bill..." />;
   if (error) return <ErrorBanner message={error} onRetry={fetchBill} />;
-  if (!data) return null;
+  if (!data || !data.bill) return <ErrorBanner message="Bill records not found" onRetry={fetchBill} />;
 
   const { subscription, bill } = data;
   const isCustomer = user?.role === 'customer';

@@ -109,7 +109,7 @@ export const TodayDrops = () => {
 
   if (loading) return <Loader message="Loading assigned delivery route..." />;
   if (error) return <ErrorBanner message={error} onRetry={fetchTodayDrops} />;
-  if (!data) return null;
+  if (!data) return <ErrorBanner message="Delivery routes not found" onRetry={fetchTodayDrops} />;
 
   const { date, totalDrops, pendingCount, deliveredCount, failedCount, tasks } = data;
 

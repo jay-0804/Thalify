@@ -6,8 +6,13 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('tiffinloop_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('tiffinloop_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      localStorage.removeItem('tiffinloop_user');
+      return null;
+    }
   });
   const [token, setToken] = useState(() => localStorage.getItem('tiffinloop_token'));
   const [isLoading, setIsLoading] = useState(true);

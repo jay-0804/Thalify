@@ -21,7 +21,20 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+    const getSocketUrl = () => {
+      if (import.meta.env.VITE_SOCKET_URL) return import.meta.env.VITE_SOCKET_URL;
+      if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '');
+      if (
+        typeof window !== 'undefined' &&
+        window.location.hostname !== 'localhost' &&
+        window.location.hostname !== '127.0.0.1'
+      ) {
+        return 'https://thalify-backend.onrender.com';
+      }
+      return 'http://localhost:5000';
+    };
+
+    const socketUrl = getSocketUrl();
     const newSocket = io(socketUrl, {
       auth: { token },
       transports: ['websocket', 'polling'],

@@ -112,7 +112,7 @@ export const Dashboard = () => {
 
   if (loading) return <Loader message="Loading kitchen dashboard metrics..." />;
   if (error) return <ErrorBanner message={error} onRetry={fetchOverview} />;
-  if (!data) return null;
+  if (!data) return <ErrorBanner message="Dashboard metrics unavailable" onRetry={fetchOverview} />;
 
   const { tomorrowHeadcount, tomorrowPrep, deliveryProgress, totalUnpaidBalance, activeSubscribersCount } = data;
 

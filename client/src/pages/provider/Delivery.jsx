@@ -135,7 +135,7 @@ export const Delivery = () => {
 
   if (loading) return <Loader message="Loading delivery dispatch board..." />;
   if (error) return <ErrorBanner message={error} onRetry={() => fetchDeliveryData(true)} />;
-  if (!data) return null;
+  if (!data) return <ErrorBanner message="Delivery board unavailable" onRetry={() => fetchDeliveryData(true)} />;
 
   const { totalTasks, groupedByArea } = data;
   const areaKeys = Object.keys(groupedByArea || {});

@@ -66,7 +66,7 @@ export const Prep = () => {
 
   if (loading) return <Loader message="Aggregating kitchen headcount..." />;
   if (error) return <ErrorBanner message={error} onRetry={() => fetchPrep(true)} />;
-  if (!data) return null;
+  if (!data) return <ErrorBanner message="Prep data unavailable" onRetry={() => fetchPrep(true)} />;
 
   const { isLocked, cutoffTime, skippedCount, totals, breakdown } = data;
 

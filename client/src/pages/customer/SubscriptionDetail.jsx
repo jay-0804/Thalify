@@ -198,9 +198,12 @@ export const SubscriptionDetail = () => {
 
   if (loading) return <Loader message="Loading 14-day meal schedule..." />;
   if (error) return <ErrorBanner message={error} onRetry={fetchDetail} />;
-  if (!data) return null;
+  if (!data || !data.subscription) {
+    return <ErrorBanner message="Subscription details not found" onRetry={fetchDetail} />;
+  }
 
-  const { subscription, meals } = data;
+  const subscription = data.subscription;
+  const meals = Array.isArray(data.meals) ? data.meals : [];
   const cutoffTime = subscription.providerId?.cutoffTime || '17:00';
 
   return (

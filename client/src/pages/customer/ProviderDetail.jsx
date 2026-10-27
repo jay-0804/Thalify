@@ -135,7 +135,7 @@ export const ProviderDetail = () => {
 
   if (loading) return <Loader message="Loading kitchen details..." />;
   if (error) return <ErrorBanner message={error} onRetry={fetchDetails} />;
-  if (!data) return null;
+  if (!data || !data.provider) return <ErrorBanner message="Kitchen profile not found" onRetry={fetchDetails} />;
 
   const { provider, plans, menu } = data;
 
