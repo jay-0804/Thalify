@@ -99,10 +99,13 @@ export const Navbar = () => {
                 )}
               </>
             ) : (
-              <div className="hidden lg:flex items-center space-x-6 text-xs font-medium text-mocha-600">
+              <div className="hidden lg:flex items-center space-x-6 text-xs font-semibold text-mocha-600">
+                <Link to="/providers" className="hover:text-amber-700 transition-colors flex items-center">
+                  <span>Browse Kitchens</span>
+                </Link>
                 <a href="#how-it-works" className="hover:text-mocha-950 transition-colors">How It Works</a>
                 <a href="#culinary-variety" className="hover:text-mocha-950 transition-colors">Cuisines</a>
-                <a href="#partner-section" className="hover:text-mocha-950 transition-colors">For Kitchens</a>
+                <a href="#partner-section" className="hover:text-gold-700 transition-colors">For Kitchens</a>
               </div>
             )}
           </nav>
@@ -128,22 +131,22 @@ export const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center space-x-2.5">
+              <div className="flex items-center space-x-2">
                 <Link
                   to="/register?role=provider"
-                  className="hidden sm:inline-flex items-center px-3 py-1.5 text-xs font-semibold text-gold-800 hover:text-gold-900 hover:bg-gold-50/70 rounded-xl transition-smooth"
+                  className="hidden sm:inline-flex items-center px-3 py-1.5 text-xs font-semibold text-gold-900 hover:text-gold-950 hover:bg-gold-50/80 rounded-xl transition-smooth"
                 >
                   <ChefHat className="w-3.5 h-3.5 mr-1 text-gold-600" />
-                  <span>Partner Kitchen</span>
+                  <span>For Kitchens</span>
                 </Link>
                 <Link
                   to="/login"
                   className="px-3.5 py-1.5 text-xs font-semibold text-mocha-700 hover:text-mocha-950 hover:bg-mocha-100/60 rounded-xl transition-smooth"
                 >
-                  Log in
+                  Sign In
                 </Link>
                 <Link
-                  to="/register"
+                  to="/register?role=customer"
                   className="px-4 py-2 text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-xs transition-smooth hover:scale-105"
                 >
                   Get Started

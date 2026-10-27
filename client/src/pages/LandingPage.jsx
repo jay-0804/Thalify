@@ -344,20 +344,20 @@ export const LandingPage = () => {
               </div>
 
               {/* Partner Actions */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+              <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
                 <Link
                   to="/register?role=provider"
-                  className="w-full sm:w-auto px-7 py-3.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-2xl shadow-xl transition-smooth flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-bold text-sm rounded-2xl shadow-xl transition-smooth flex items-center justify-center space-x-2 hover:scale-[1.02]"
                 >
                   <ChefHat className="w-4 h-4" />
-                  <span>Register Your Kitchen Now</span>
+                  <span>Register Your Kitchen (2 Min Setup)</span>
                 </Link>
 
                 <Link
                   to="/login"
-                  className="w-full sm:w-auto px-6 py-3.5 bg-mocha-800 text-gold-300 hover:text-gold-200 font-bold text-sm rounded-2xl border border-gold-500/30 transition-smooth text-center"
+                  className="text-xs text-gold-300 hover:text-white underline-offset-4 hover:underline font-medium transition-colors"
                 >
-                  Kitchen Partner Login
+                  Already registered? Sign in to Kitchen Portal &rarr;
                 </Link>
               </div>
             </div>
@@ -405,18 +405,18 @@ export const LandingPage = () => {
                   Subscribe to healthy daily meals, skip anytime before cutoff with 1-click credits.
                 </p>
               </div>
-              <div className="space-y-2.5 pt-4 border-t border-mocha-200/80 mt-4">
+              <div className="space-y-2 pt-4 border-t border-mocha-200/80 mt-4 text-center">
                 <Link
                   to="/register?role=customer"
-                  className="block w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl text-center shadow-xs transition-smooth hover:scale-[1.02]"
+                  className="block w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth hover:scale-[1.02]"
                 >
-                  Customer Sign Up
+                  Join as Customer
                 </Link>
                 <Link
                   to="/login"
-                  className="block w-full py-2 text-mocha-700 hover:text-mocha-950 text-xs font-semibold text-center hover:bg-mocha-100/80 rounded-xl transition-smooth"
+                  className="inline-block text-[11px] text-mocha-600 hover:text-mocha-950 font-medium hover:underline pt-1"
                 >
-                  Customer Login
+                  Already have an account? Log In
                 </Link>
               </div>
             </div>
@@ -432,18 +432,18 @@ export const LandingPage = () => {
                   Eliminate food waste with automated headcount freezing & zero-dispute billing.
                 </p>
               </div>
-              <div className="space-y-2.5 pt-4 border-t border-gold-300/80 mt-4">
+              <div className="space-y-2 pt-4 border-t border-gold-300/80 mt-4 text-center">
                 <Link
                   to="/register?role=provider"
-                  className="block w-full py-2.5 bg-gold-600 hover:bg-gold-700 text-white text-xs font-bold rounded-xl text-center shadow-xs transition-smooth hover:scale-[1.02]"
+                  className="block w-full py-2.5 bg-gold-600 hover:bg-gold-700 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth hover:scale-[1.02]"
                 >
                   Register Kitchen
                 </Link>
                 <Link
                   to="/login"
-                  className="block w-full py-2 text-gold-950 hover:text-mocha-950 text-xs font-semibold text-center hover:bg-gold-100/60 rounded-xl transition-smooth"
+                  className="inline-block text-[11px] text-gold-900 hover:text-mocha-950 font-medium hover:underline pt-1"
                 >
-                  Provider Login
+                  Kitchen Partner? Log In
                 </Link>
               </div>
             </div>
@@ -459,16 +459,16 @@ export const LandingPage = () => {
                   View today's assigned drop checklist and mark doorstep deliveries in real-time.
                 </p>
               </div>
-              <div className="space-y-2.5 pt-4 border-t border-mocha-200/80 mt-4">
+              <div className="space-y-2 pt-4 border-t border-mocha-200/80 mt-4 text-center">
                 <Link
                   to="/login"
-                  className="block w-full py-2.5 bg-mocha-900 hover:bg-mocha-950 text-white text-xs font-bold rounded-xl text-center shadow-xs transition-smooth hover:scale-[1.02]"
+                  className="block w-full py-2.5 bg-mocha-900 hover:bg-mocha-950 text-white text-xs font-bold rounded-xl shadow-xs transition-smooth hover:scale-[1.02]"
                 >
                   Rider Sign In
                 </Link>
-                <div className="w-full py-2 text-[11px] text-mocha-500 text-center font-medium bg-mocha-100/50 rounded-xl border border-mocha-200/50">
-                  Accounts managed by kitchen
-                </div>
+                <span className="inline-block text-[10px] text-mocha-400 font-medium pt-1">
+                  Accounts provisioned by kitchen owner
+                </span>
               </div>
             </div>
           </div>

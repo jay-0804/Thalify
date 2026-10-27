@@ -1,128 +1,157 @@
-# Thalify — 3 to 5 Minute Demo Video Script
+# Thalify — Complete Line-by-Line Demo Video Script
 **Target Duration:** 3:30 – 4:30 minutes  
-**Tone:** Confident, professional, clear, engineering-oriented  
-**Product:** Thalify — *“Your daily meals, on your terms.”*
+**Format:** Read the **[SAY]** text aloud naturally while performing the corresponding **[ACTION]** on your screen.
 
 ---
 
-## 🎬 Video Recording Checklist (Before Hitting Record)
-1. **Frontend running** on `http://localhost:5173` (Zoom set to 100% or 110% for crisp text).
-2. **Backend running** on `http://localhost:5000`.
-3. Open two browser windows side-by-side or tabs ready:
-   - **Tab 1:** Customer View (`customer@demo.com`)
-   - **Tab 2:** Kitchen Owner Dashboard (`provider@demo.com`)
-4. Microphone tested and clear.
+## 🛠️ Pre-Recording Setup (1 Minute Prep)
+1. Open **Browser Window 1** at `http://localhost:5173` (Zoom at 100% or 110%).
+2. Open **Browser Window 2** (or Incognito / second tab) ready for the Provider Dashboard.
+3. Open a **Terminal window** ready inside `server/` with `npm test` ready to press Enter.
+4. Set microphone volume comfortably.
 
 ---
 
-## ⏱️ Video Script Breakdown
-
-### [0:00 – 0:40] Scene 1: Introduction & The Core Problem
-**Visual / Screen Action:**
-> Start on the **Landing Page** of Thalify (`http://localhost:5173`).
-> Slowly scroll down to reveal the interactive 3D brass thali showcase, the value proposition cards, and the 8 curated kitchens across Bengaluru.
-
-**Spoken Voiceover:**
-> *"Hello everyone! Welcome to the demonstration of **Thalify**, an end-term software engineering project designed to revolutionize how daily meal subscriptions, PG messes, and home kitchens operate.*
->
-> *Across urban hubs, millions of students and working professionals rely on daily tiffin deliveries. Yet virtually the entire sector runs on chaotic WhatsApp messages, phone calls, and manual notebook tallies.*
->
-> *This creates three massive headaches: first, late-night meal skips causing disputes over monthly bills; second, kitchens overcooking food because they don't know tomorrow's exact headcount; and third, delivery miscommunication with zero proof of drops.*
->
-> *Thalify solves this through **server-authoritative 5:00 PM cutoff enforcement**, **mathematically derived billing**, **real-time WebSocket kitchen dispatch**, and **integrated Razorpay payments**."*
+## ⏱️ Video Walkthrough
 
 ---
 
-### [0:40 – 1:30] Scene 2: Role-Based Access & Customer Meal Calendar
-**Visual / Screen Action:**
-> Click **"Login"** in the top navigation.
-> Click the **"Quick Demo Accounts"** button to show the 1-click credential selector with all 8 kitchens and customer accounts.
-> Select **"Rohan Sharma (Customer)"** and click Login.
-> Go to **"Subscriptions"** and open the active subscription to show the **14-Day Interactive Meal Calendar**.
-> Point your cursor to the daily dishes shown inside the calendar card (*Paneer Butter Masala • Yellow Dal Tadka • Desi Ghee Phulkas*).
+### [0:00 – 0:45] SCENE 1: THE REAL-WORLD PROBLEM & INTRODUCING THALIFY
 
-**Spoken Voiceover:**
-> *"Let's log in as our customer persona, Rohan Sharma. Notice our streamlined credential drawer that provides 1-click access across all user roles with strict Role-Based Access Control.*
+**[ACTION]:**
+> Start with your screen full on `http://localhost:5173`.  
+> Move your cursor over the interactive 3D brass thali on the right so the bowls and brass shimmer under the light.  
+> Slowly scroll down to show the stats bar (100% Skip Credits, 17:00 IST Cutoff, ₹0 Drift Ledger).
+
+**[SAY]:**
+> "Hello everyone! My name is Jay Baid, and this is the demonstration of **Thalify**—our end-term software engineering project with the tagline: *'Your daily meals, on your terms.'*
 >
-> *Inside the Customer Portal, Rohan can see his active 30-day subscription and a transparent 14-day rolling meal calendar. Unlike static apps, every day's card details the exact dishes being prepared.*
+> In India today, over 15 million college students, PG residents, and working professionals depend on daily tiffin services and PG messes for their lunch and dinner.
 >
-> *Now watch what happens when Rohan needs to skip a meal. Before the kitchen's 5:00 PM IST cutoff, he simply clicks 'Skip Meal'. The system instantly transitions the meal to 'Skipped', credits his account balance, and prevents food waste before groceries are purchased.*
+> But almost this entire multi-crore industry runs on manual paper diaries, phone calls, and chaotic WhatsApp messages. 
 >
-> *And if his plans change? He has an 'Undo Skip' option available right up until 5:00 PM. But if he tries to skip or undo after 5:00 PM, the server strictly blocks the request with an immutable cutoff lock—guaranteeing fairness for the kitchen."*
+> Picture this common scenario: a student goes out for dinner with friends at 8 PM and sends a WhatsApp text: *'Bhaiya, kal tiffin mat bhejna.'* The mess owner is busy cooking, misses the message, and prepares the food anyway. 
+>
+> At the end of the month, the student claims they skipped eight meals, while the kitchen owner's notebook only has three tally marks. This leads to bitter arguments, lost revenue for the kitchen, and massive food wastage.
+>
+> We built Thalify to solve this problem permanently through **server-authoritative 5:00 PM cutoff enforcement**, **mathematically derived billing**, **real-time WebSocket kitchen orchestration**, and **integrated Razorpay payments**."
 
 ---
 
-### [1:30 – 2:20] Scene 3: Derived Ledger & Razorpay Checkout
-**Visual / Screen Action:**
-> Scroll down to the **Monthly Billing & Ledger** card on the subscription page.
-> Highlight the real-time breakdown: Gross Amount, Skipped Credits Saved, Amount Paid, and Remaining Balance.
-> Click the **"Pay Balance with Razorpay"** button.
-> The payment modal opens showing the amount and Razorpay test checkout integration. Click **"Confirm & Pay"**.
-> Show the green success toast, instant ledger update, and newly recorded receipt.
+### [0:45 – 1:35] SCENE 2: CUSTOMER CALENDAR & 5:00 PM SKIP / UNDO ENGINE
 
-**Spoken Voiceover:**
-> *"Next is our Derived Billing Ledger. In Thalify, balances are never stored as mutable numbers that can get out of sync. Instead, the balance is derived directly from immutable meal instance states—delivered meals are charged, while customer skips are credited.*
+**[ACTION]:**
+> Click **"Sign In"** in the top navigation bar.  
+> Click the **"Quick Demo Accounts"** button to reveal the 1-click credential drawer.  
+> Click **"Rohan Sharma (Customer)"**—it auto-fills and logs you in directly.  
+> Click **"Subscriptions"** in the navbar, and click on Rohan's active subscription card to open the **14-Day Interactive Meal Calendar**.  
+> Point your cursor to the daily dishes listed on today's card (*Paneer Butter Masala • Yellow Dal Tadka • Desi Ghee Phulkas*).  
+> Click the **"Skip Meal"** button on tomorrow's lunch. Show the badge turning to a red "Skipped" badge.  
+> Point to the **"Undo Skip"** button that immediately appears. Click **"Undo Skip"** to restore it back to "Scheduled".
+
+**[SAY]:**
+> "Let's log in as our customer persona, Rohan Sharma, using our 1-click test credential drawer. Notice that our application uses strict Role-Based Access Control.
 >
-> *Rohan can immediately settle his monthly balance using our integrated **Razorpay Payment Gateway**. When he initiates a payment, our backend issues a verified Razorpay order. Upon confirmation, the payment is cryptographically verified, the ledger updates in real time, and an auditable receipt is stored in MongoDB."*
+> Inside the Customer Portal, Rohan can access his active 30-day subscription and a transparent 14-day rolling meal calendar. 
+>
+> Notice that every day's card explicitly lists the freshly cooked menu dishes for that day—such as Paneer Butter Masala, Yellow Dal Tadka, and Desi Ghee Phulkas.
+>
+> Now, here is where our core engineering logic comes in:
+>
+> If Rohan is heading out, he doesn't need to call anyone or send a WhatsApp text. He simply clicks 'Skip Meal'. The system instantly marks the meal as skipped, adjusts tomorrow's cooking count, and credits the cost directly back to his account.
+>
+> What if his plans change? He has an 'Undo Skip' button right here. 
+>
+> But here is the critical business rule: this skip and undo functionality is strictly governed by a server-side cutoff at **5:00 PM IST**. After 5:00 PM, the server permanently locks the meal with a 409 error code. This protects the kitchen from late-night cancellations and ensures they can purchase exact grocery quantities without wasting food."
 
 ---
 
-### [2:20 – 3:15] Scene 4: Kitchen Owner Dashboard & Real-Time Prep Engine
-**Visual / Screen Action:**
-> Switch to the Kitchen Owner tab (`provider@demo.com` — *Maa Ki Rasoi*).
-> Show the **Live Operations Dashboard**: Tomorrow's Cook Headcount, Today's Drop Progress, and Active Subscribers.
-> Point out the **Live Customer Skip Notification Feed** on the right side.
-> Open the **"Prep Sheet & KOT"** tab to show automated aggregation by Diet (Veg vs Non-Veg) and Meal Slot (Lunch vs Dinner).
-> Click **"Print Kitchen Order Ticket (KOT)"** to show the clean print preview.
-> Open the **Customer Directory** to show the list of subscribers with 1-click WhatsApp messaging.
+### [1:35 – 2:20] SCENE 3: DERIVED BILLING LEDGER & RAZORPAY PAYMENT
 
-**Spoken Voiceover:**
-> *"Now let's switch to the Kitchen Owner Portal for 'Maa Ki Rasoi'.*
+**[ACTION]:**
+> Scroll down to the **"Monthly Billing & Itemized Ledger"** section on the same page.  
+> Hover over the summary boxes: Total Charged, Credits Saved, Amount Paid, and Remaining Balance.  
+> Click the green **"Pay Balance with Razorpay"** button.  
+> In the Razorpay payment modal, point out the amount, click **"Confirm & Pay"**.  
+> Watch the modal close, the success toast appear, the balance update immediately, and a new payment receipt appear in the ledger.
+
+**[SAY]:**
+> "Scrolling down, we arrive at our **Derived Billing Ledger**.
 >
-> *Here, the kitchen manager has complete operational visibility. Whenever any subscriber skips a meal, a live WebSocket event triggers an instantaneous notification on the dashboard without needing to refresh the page.*
+> In many naive applications, user wallet balances are stored as mutable numbers that easily drift out of sync. In Thalify, the balance is derived mathematically directly from immutable meal instance records. Delivered meals are charged, while customer-skipped meals are credited.
 >
-> *The core innovation here is our **Automated Prep Engine**. Instead of manual tallying, Thalify aggregates tomorrow's guaranteed headcount categorized by diet—Veg versus Non-Veg—and route sector. With one click, the chef can print a standard Kitchen Order Ticket (KOT) for the cooks.*
+> Here, Rohan can see the exact amount charged, the savings credited from skipped meals, and his remaining unpaid balance.
 >
-> *Furthermore, the provider has an instant customer directory with one-click direct WhatsApp integration and broadcast announcement capabilities to keep subscribers informed."*
+> To settle the balance, he simply clicks 'Pay Balance with Razorpay'. Our backend creates an authentic Razorpay order. When we confirm the payment, our server cryptographically verifies the transaction, credits the ledger, and generates an auditable digital receipt. No more month-end fights—every single rupee is accounted for."
 
 ---
 
-### [3:15 – 3:55] Scene 5: Delivery Dispatch Board & Status Locking
-**Visual / Screen Action:**
-> Navigate to the **"Delivery Dispatch"** tab in the kitchen dashboard.
-> Show today's drop list categorized by area (Koramangala, HSR Layout).
-> If empty, click **"Generate Today's Demo Drops"** to show instant task generation.
-> Log in as the Delivery Rider (`delivery@demo.com`) or show the dispatch board marking a drop as **"Delivered"**.
-> Highlight how terminal states lock the drop permanently to prevent tampering (`409 ALREADY_FINALIZED`).
+### [2:20 – 3:15] SCENE 4: KITCHEN OWNER PORTAL, PREP ENGINE & REAL-TIME ALERTS
 
-**Spoken Voiceover:**
-> *"On the logistics side, our Delivery Dispatch board groups daily drops by geographic area and assigns them to delivery riders.*
+**[ACTION]:**
+> Switch to the second browser tab or log out and log in as **"Sunita Sharma (Maa Ki Rasoi)"** (`provider@demo.com`).  
+> Point out the top metrics: Tomorrow's Headcount, Today's Drops, and Total Unpaid Balance.  
+> Point out the **"Live Customer Skip Feed"** on the right side of the screen.  
+> Click on the **"Prep Sheet & KOT"** tab.  
+> Show the aggregated counts: Veg Lunch, Non-Veg Lunch, Rotis, Dal portions.  
+> Click the **"Print Kitchen Order Ticket (KOT)"** button to show the clean print-ready ticket.  
+> Open the **"Customer Directory"** tab to show active subscribers with the 1-click **"WhatsApp"** button.
+
+**[SAY]:**
+> "Now let's switch perspectives to the Kitchen Owner Portal for 'Maa Ki Rasoi'.
 >
-> *Riders access a streamlined mobile view where they can mark each drop as 'Delivered' or 'Failed'. If a drop fails, the rider must specify the reason—for example, 'customer unavailable', which is billable, versus 'kitchen fault', which is credited back to the customer.*
+> Here, the kitchen manager has total operational control. Look at the right panel: whenever a customer skips a meal, a live WebSocket event pushes a real-time notification directly to this feed without needing a page refresh.
 >
-> *Once a drop is marked, our state machine locks the record permanently, providing an indisputable audit trail."*
+> Next is our **Automated Kitchen Prep Engine**. 
+>
+> In traditional messes, cooks waste hours doing manual tally marks. In Thalify, our engine automatically aggregates tomorrow's exact cooking requirements broken down by diet—Veg versus Non-Veg—and meal slot. With one click, the chef can print a standard Kitchen Order Ticket (KOT) for the cooks.
+>
+> We have also included a Customer Directory where the kitchen can view all active subscribers, broadcast announcements, and message customers directly on WhatsApp with a single click."
 
 ---
 
-### [3:55 – 4:30] Scene 6: Architecture, Testing & Conclusion
-**Visual / Screen Action:**
-> Switch briefly to a terminal or VS Code window.
-> Run `npm test` inside `server/` to show all **18/18 Acceptance Tests passing with 100% green checkmarks**.
+### [3:15 – 3:55] SCENE 5: DELIVERY ROUTE DISPATCH & STATUS LOCKING
+
+**[ACTION]:**
+> Click on the **"Delivery Dispatch"** tab.  
+> Show today's delivery tasks grouped by sector: Koramangala, HSR Layout, BTM.  
+> Point out the status badges ("Pending", "Delivered", "Failed").  
+> Click **"Delivered"** on a pending drop. Show the status turn green and lock.  
+> Click **"Failed"** on another drop to show the reason selector modal (`customer_unavailable` vs. `kitchen_fault`).
+
+**[SAY]:**
+> "Now let's examine the logistics workflow in the **Delivery Dispatch Board**.
+>
+> Daily drops are automatically clustered by neighborhood sectors—like Koramangala and HSR Layout—making route distribution effortless for delivery riders.
+>
+> Riders have a clean, mobile-optimized checklist where they can mark each meal as 'Delivered' or 'Failed'. 
+>
+> If a delivery fails, the rider must select an audited reason code: if the customer was unavailable, the meal remains billable; if the kitchen was at fault, the customer is automatically credited.
+>
+> Once marked, our backend state machine permanently locks the task, preventing accidental double-drops or post-delivery tampering."
+
+---
+
+### [3:55 – 4:30] SCENE 6: ARCHITECTURE, TEST SUITE & CONCLUSION
+
+**[ACTION]:**
+> Switch to your Terminal window.  
+> Run the command: `npm test` inside the `server/` directory.  
+> Show the terminal output running all 18 acceptance tests and showing **18 passing (100% green checkmarks)**.  
 > Switch back to the Thalify landing page.
 
-**Spoken Voiceover:**
-> *"Under the hood, Thalify is built on a resilient modern architecture: React 18 and Tailwind on the frontend, an Express ES-module REST API with Socket.io real-time websockets, and MongoDB with compound unique indexes for strict idempotency.*
+**[SAY]:**
+> "Under the hood, Thalify is built on a modern, decoupled architecture: React 18 with Tailwind CSS on the frontend, an Express ES-module API gateway with Socket.io WebSockets, and MongoDB Atlas with compound unique indexes to guarantee strict idempotency.
 >
-> *Our codebase is verified by an automated acceptance test suite covering all 18 core business rules—including concurrency locks, cutoff validation, overpayment prevention, and role authorization—all passing with a 100% success rate.*
+> As you can see on the screen, our entire application is backed by an automated acceptance test suite covering all 18 core business rules—including concurrency locks, cutoff enforcement, overpayment guards, and role security—all passing with a 100% success rate.
 >
-> *Thalify transforms informal tiffin services into an organized, transparent, and waste-free subscription economy.*
+> Thalify replaces messy paper notebooks with a reliable, transparent, and waste-free subscription platform for everyone.
 >
-> *Thank you for watching!"*
+> Thank you very much!"
 
 ---
 
 ## 💡 Quick Tips for High Marks
-- **Speak clearly and at a steady pace.**
-- **Keep cursor movements deliberate and smooth.**
-- **Show the working UI rather than reading code files.**
-- **Mention the 5:00 PM IST cutoff and derived billing** — evaluators look specifically for meaningful application logic over simple CRUD!
+1. **Pronunciation**: Speak steadily and pause for 1 second after each action before speaking.
+2. **Cursor Motion**: Move your cursor smoothly to guide the evaluator's eye.
+3. **No Code Reading**: As per the guidelines, showing the working product and its workflows carries the highest weightage (80%+).
