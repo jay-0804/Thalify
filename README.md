@@ -16,6 +16,24 @@
   Eliminates paper notebook disputes through server-authoritative cutoff enforcement, derived billing, real-time WebSocket dispatch, and integrated online payments.
 </p>
 
+<p align="center">
+  <a href="https://drive.google.com/file/d/1OL3TSUQ86h16f0F1lD5SYv3TuTlu66_Q/view?usp=sharing">
+    <img src="https://img.shields.io/badge/Demo%20Video-Watch%20Walkthrough-red?style=for-the-badge&logo=google-drive&logoColor=white" alt="Demo Video" />
+  </a>
+  <a href="https://client-brown-chi.vercel.app">
+    <img src="https://img.shields.io/badge/Live%20Application-client--brown--chi.vercel.app-black?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Application" />
+  </a>
+  <a href="https://thalify-backend.onrender.com/api/health">
+    <img src="https://img.shields.io/badge/Backend%20API-Live%20on%20Render-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Backend API" />
+  </a>
+</p>
+
+| 🎬 **Demo Video Walkthrough** | [**Watch Full Product Demonstration Video (Google Drive)**](https://drive.google.com/file/d/1OL3TSUQ86h16f0F1lD5SYv3TuTlu66_Q/view?usp=sharing) |
+| :--- | :--- |
+| 🌐 **Live Deployed App** | [https://client-brown-chi.vercel.app](https://client-brown-chi.vercel.app) |
+| ⚙️ **Production Backend API** | [https://thalify-backend.onrender.com/api/health](https://thalify-backend.onrender.com/api/health) |
+| 🔑 **Demo Accounts (Password: `Demo@1234`)** | **Customer:** `customer@demo.com` • **Kitchen:** `provider@demo.com` • **Delivery:** `delivery@demo.com` |
+
 </div>
 
 ---
