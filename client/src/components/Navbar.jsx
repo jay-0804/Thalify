@@ -23,6 +23,26 @@ export const Navbar = () => {
     navigate('/login');
   };
 
+  const scrollToSection = (e, sectionId) => {
+    e.preventDefault();
+    const doScroll = () => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const navHeight = 80;
+        const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        window.history.pushState(null, '', `#${sectionId}`);
+      }
+    };
+
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      doScroll();
+    } else {
+      navigate(`/#${sectionId}`);
+      setTimeout(doScroll, 200);
+    }
+  };
+
   const navLinkStyle = ({ isActive }) =>
     `inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-smooth ${
       isActive
@@ -99,12 +119,24 @@ export const Navbar = () => {
                 )}
               </>
             ) : (
-              <div className="hidden lg:flex items-center space-x-6 text-xs font-semibold text-mocha-600">
+              <div className="flex items-center space-x-3 sm:space-x-6 text-xs font-semibold text-mocha-600">
                 <Link to="/providers" className="hover:text-amber-700 transition-colors flex items-center">
                   <span>Browse Kitchens</span>
                 </Link>
-                <a href="#how-it-works" className="hover:text-mocha-950 transition-colors">How It Works</a>
-                <a href="#culinary-variety" className="hover:text-mocha-950 transition-colors">Cuisines</a>
+                <button
+                  type="button"
+                  onClick={(e) => scrollToSection(e, 'how-it-works')}
+                  className="hover:text-mocha-950 transition-colors cursor-pointer font-semibold"
+                >
+                  How It Works
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => scrollToSection(e, 'culinary-variety')}
+                  className="hover:text-mocha-950 transition-colors cursor-pointer font-semibold"
+                >
+                  Cuisines
+                </button>
               </div>
             )}
           </nav>

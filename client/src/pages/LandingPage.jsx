@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Thali3DShowcase } from '../components/Thali3DShowcase.jsx';
 import {
   UtensilsCrossed,
@@ -22,9 +22,34 @@ import {
 
 export const LandingPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        const navHeight = 80;
+        const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        setTimeout(() => {
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }, 150);
+      }
+    }
+  }, [location.hash]);
+
+  const scrollToTarget = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const navHeight = 80;
+      const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+      window.history.pushState(null, '', `#${id}`);
+    }
+  };
 
   return (
-    <div className="space-y-24 pb-20 overflow-x-hidden">
+    <div className="space-y-24 pb-20 overflow-x-clip">
       {/* 1. HERO SECTION WITH 3D ANIMATED THALI SHOWCASE */}
       <section className="relative overflow-hidden bg-gradient-to-b from-mocha-950 via-mocha-900 to-canvas text-white pt-16 pb-24 px-4 sm:px-6 lg:px-8">
         {/* Ambient atmospheric gradients */}
@@ -60,13 +85,14 @@ export const LandingPage = () => {
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
-              <a
-                href="#partner-section"
-                className="w-full sm:w-auto px-6 py-3.5 bg-mocha-800/80 hover:bg-mocha-800 text-gold-300 hover:text-gold-200 font-bold text-sm rounded-2xl border border-gold-500/30 transition-smooth flex items-center justify-center space-x-2"
+              <button
+                type="button"
+                onClick={() => scrollToTarget('partner-section')}
+                className="w-full sm:w-auto px-6 py-3.5 bg-mocha-800/80 hover:bg-mocha-800 text-gold-300 hover:text-gold-200 font-bold text-sm rounded-2xl border border-gold-500/30 transition-smooth flex items-center justify-center space-x-2 cursor-pointer"
               >
                 <ChefHat className="w-4 h-4" />
                 <span>Partner As a Kitchen</span>
-              </a>
+              </button>
             </div>
 
             {/* Aligned Metrics Bar */}

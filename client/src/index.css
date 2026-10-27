@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-canvas text-mocha-950;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
