@@ -133,13 +133,7 @@ export const ProviderDetail = () => {
     }
   };
 
-  if (loading) return <Loader message="Loading kitchen details..." />;
-  if (error) return <ErrorBanner message={error} onRetry={fetchDetails} />;
-  if (!data || !data.provider) return <ErrorBanner message="Kitchen profile not found" onRetry={fetchDetails} />;
-
-  const { provider, plans, menu } = data;
-
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const menu = data?.menu || [];
 
   const groupedMenu = useMemo(() => {
     if (!menu || !menu.length) return [];
@@ -172,6 +166,14 @@ export const ProviderDetail = () => {
     const todayItem = groupedMenu.find((d) => d.date === todayStr);
     return todayItem || groupedMenu[0];
   }, [groupedMenu, selectedMenuDate]);
+
+  if (loading) return <Loader message="Loading kitchen details..." />;
+  if (error) return <ErrorBanner message={error} onRetry={fetchDetails} />;
+  if (!data || !data.provider) return <ErrorBanner message="Kitchen profile not found" onRetry={fetchDetails} />;
+
+  const { provider, plans } = data;
+
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
