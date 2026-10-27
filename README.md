@@ -262,34 +262,32 @@ npm test
 
 ---
 
-## 10. Viva Defense & Evaluator Questions
+## 10. Deployment Instructions
 
-#### Q1: Why materialize MealInstances instead of computing from rules on-the-fly?
-**Answer:** Materializing meal instances transforms what would be an expensive, recursive schedule calculation into simple, indexed database lookups (`O(1)` query per date). Most importantly, each meal needs its own unique lifecycle state (`scheduled`, `skipped`, `delivered`, `failed`), an individual failure reason, and a snapshot of the plan price at the moment of subscription.
+### Backend (Render / Railway / VPS)
+1. Set up a Web Service pointing to repository root directory `/server`.
+2. Build Command: `npm install`
+3. Start Command: `node src/server.js`
+4. Configure Environment Variables: `MONGODB_URI`, `JWT_SECRET`, `CLIENT_URL`, `TZ=Asia/Kolkata`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`.
 
-#### Q2: How do you prevent race conditions when two users or tabs skip simultaneously?
-**Answer:** We execute atomic database transitions using MongoDB's `findOneAndUpdate` with `{ _id, status: 'scheduled' }` in the query filter. If two requests hit the server concurrently, the first request matches the `scheduled` filter and changes the status to `skipped`; the second request immediately fails to match the filter and receives an explicit `409 INVALID_STATE`.
-
-#### Q3: Where is the cutoff enforced and why?
-**Answer:** The cutoff is strictly validated server-side in `services/cutoff.service.js` against server time converted to `Asia/Kolkata`. Client timestamps cannot be trusted because any user can adjust their device time to bypass deadlines.
-
-#### Q4: How does the bill stay correct if a provider increases their plan price?
-**Answer:** Each `MealInstance` document contains a `price` integer that is snapshotted from `plan.pricePerMeal` at the time of generation. When a provider updates their plan price, only future generated instances capture the new price; historical records remain immutable.
-
-#### Q5: How do you prevent privilege and role escalation?
-**Answer:** Public registration allows only `customer` or `provider`. Delivery accounts cannot be registered publicly; they can only be provisioned by a verified provider through the protected `/provider/staff` endpoint, which forces `role = 'delivery'` and sets `providerId` to the authenticated owner's ID.
+### Frontend (Vercel / Netlify)
+1. Set up a static deployment pointing to directory `/client`.
+2. Build Command: `npm run build`
+3. Output Directory: `dist`
+4. Configure Environment Variables: `VITE_API_URL` and `VITE_SOCKET_URL`.
+5. Pre-configured `vercel.json` rewrite handles single-page application (SPA) client-side routing.
 
 ---
 
-## 11. Project Evaluation Checklist
+## 11. Final Submission Checklist
 
-- [x] Functional software application with complete frontend and backend
-- [x] Clear problem statement & target persona definition
-- [x] 5 complete core workflows implemented and operational
-- [x] Server-authoritative application logic (cutoff, billing derivation, prep engine)
-- [x] Edge-case failure handling (overpayment guards, cutoff locks, role escalation prevention)
+- [x] Functional software application with complete frontend, backend, and persistence
+- [x] Problem statement & target users clearly defined
+- [x] Core user workflows fully operational (subscription, meal skipping, undo, billing, dispatch)
+- [x] Meaningful server-side business logic (5:00 PM cutoff, derived ledger, prep aggregator)
+- [x] Edge-case error handling (overpayment guards, state locking, authentication barriers)
 - [x] Zero exposed secrets (`.env` gitignored, only `.env.example` committed)
-- [x] Meaningful git history with descriptive semantic commits
-- [x] Comprehensive README with technical architecture diagrams
-- [x] Complete video demo script provided (`DEMO_SCRIPT.md`)
+- [x] Clean Git repository with descriptive development history
+- [x] Architectural documentation and local setup guide
+- [x] Comprehensive video demonstration script (`DEMO_SCRIPT.md`)
 - [x] 18/18 passing automated acceptance tests

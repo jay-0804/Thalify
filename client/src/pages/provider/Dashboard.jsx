@@ -109,9 +109,6 @@ export const Dashboard = () => {
     setIsMessageCustomerOpen(false);
     setDirectMessageText('');
   };
-      unsubDelivery();
-    };
-  }, [onPrepChanged, onDeliveryUpdate]);
 
   if (loading) return <Loader message="Loading kitchen dashboard metrics..." />;
   if (error) return <ErrorBanner message={error} onRetry={fetchOverview} />;
