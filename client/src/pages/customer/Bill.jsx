@@ -290,11 +290,28 @@ export const Bill = () => {
             <button
               onClick={handleRazorpayPayment}
               disabled={payingWithRazorpay}
-              className="px-6 py-3 bg-white hover:bg-gold-50 text-mocha-950 text-xs font-extrabold rounded-xl shadow-lg transition-smooth flex items-center space-x-2 shrink-0"
+              className="px-6 py-3 bg-white hover:bg-gold-50 text-mocha-950 text-xs font-extrabold rounded-xl shadow-lg transition-smooth flex items-center space-x-2 shrink-0 cursor-pointer"
             >
               <CreditCard className="w-4 h-4 text-amber-700" />
               <span>{payingWithRazorpay ? 'Opening Gateway...' : `Pay ₹${bill.balance} with Razorpay`}</span>
             </button>
+          </div>
+        )}
+
+        {isCustomer && bill.balance <= 0 && (
+          <div className="p-5 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-950 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden">
+            <div className="space-y-1 text-center sm:text-left">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-emerald-600" />
+                All Dues Cleared (₹0 Balance)
+              </span>
+              <h3 className="text-lg font-serif font-bold text-emerald-950">
+                Your Monthly Ledger Is Fully Settled!
+              </h3>
+              <p className="text-xs text-emerald-700">
+                Zero outstanding payments. All delivered meals have been fully paid.
+              </p>
+            </div>
           </div>
         )}
 

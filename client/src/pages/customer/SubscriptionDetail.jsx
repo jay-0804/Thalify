@@ -303,6 +303,29 @@ export const SubscriptionDetail = () => {
         )}
       </div>
 
+      {/* Payment Due & Settle Balance Quick-Bar */}
+      <div className="bg-gradient-to-r from-amber-600 via-amber-700 to-mocha-900 rounded-3xl p-5 sm:p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white/20 text-white border border-white/30">
+            💳 Outstanding Monthly Due
+          </span>
+          <h3 className="text-xl sm:text-2xl font-serif font-extrabold text-white">
+            Current Balance Due: ₹490
+          </h3>
+          <p className="text-xs text-amber-100 max-w-xl">
+            Delivered meals are billed after consumption. Settle your balance instantly with 1-click via Razorpay (UPI, Cards, NetBanking).
+          </p>
+        </div>
+
+        <Link
+          to={`/billing/${subscription._id}`}
+          className="inline-flex items-center space-x-2 px-6 py-3 bg-white hover:bg-gold-50 text-amber-950 font-extrabold text-xs sm:text-sm rounded-2xl shadow-lg transition-smooth self-start sm:self-auto hover:scale-105 cursor-pointer shrink-0"
+        >
+          <Receipt className="w-4 h-4 text-amber-600" />
+          <span>Pay Due with Razorpay →</span>
+        </Link>
+      </div>
+
       {/* 14-Day Interactive Meal Schedule */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
