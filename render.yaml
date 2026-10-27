@@ -17,6 +17,8 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+      - key: CLIENT_URL
+        value: https://client-brown-chi.vercel.app
 
   # Frontend Web Application (Static Site)
   - type: web
