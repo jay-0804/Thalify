@@ -105,7 +105,6 @@ export const Navbar = () => {
                 </Link>
                 <a href="#how-it-works" className="hover:text-mocha-950 transition-colors">How It Works</a>
                 <a href="#culinary-variety" className="hover:text-mocha-950 transition-colors">Cuisines</a>
-                <a href="#partner-section" className="hover:text-gold-700 transition-colors">For Kitchens</a>
               </div>
             )}
           </nav>
@@ -132,13 +131,6 @@ export const Navbar = () => {
               </div>
             ) : (
               <div className="flex items-center space-x-2">
-                <Link
-                  to="/register?role=provider"
-                  className="hidden sm:inline-flex items-center px-3 py-1.5 text-xs font-semibold text-gold-900 hover:text-gold-950 hover:bg-gold-50/80 rounded-xl transition-smooth"
-                >
-                  <ChefHat className="w-3.5 h-3.5 mr-1 text-gold-600" />
-                  <span>For Kitchens</span>
-                </Link>
                 <Link
                   to="/login"
                   className="px-3.5 py-1.5 text-xs font-semibold text-mocha-700 hover:text-mocha-950 hover:bg-mocha-100/60 rounded-xl transition-smooth"

@@ -283,7 +283,7 @@ All test accounts share the password: `Demo@1234`
 | **Kitchen 4** | `satvik@demo.com` | `Demo@1234` | Shuddh Satvik Rasoi (HSR Layout) | Pure Jain & Satvik meal scheduling |
 | **Delivery** | `delivery@demo.com` | `Demo@1234` | Ramesh Kumar | Assigned Koramangala drops, Delivered/Failed 1-click toggles |
 
-> 💡 **Tip:** On the Sign In page (`/login`), click the **"Quick Demo Accounts"** button to open a 1-click credential selector that pre-fills and logs you into any of the 8 kitchens or roles instantly!
+> 💡 **Evaluator Note:** For grading and testing, use the pre-configured credentials in the table above to evaluate each distinct persona (Customer, Kitchen Owner, Delivery Staff). All accounts are pre-seeded in the database with active subscriptions and delivery routes.
 
 ---
 

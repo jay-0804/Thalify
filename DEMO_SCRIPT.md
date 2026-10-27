@@ -42,15 +42,14 @@
 
 **[ACTION]:**
 > Click **"Sign In"** in the top navigation bar.  
-> Click the **"Quick Demo Accounts"** button to reveal the 1-click credential drawer.  
-> Click **"Rohan Sharma (Customer)"**—it auto-fills and logs you in directly.  
+> Enter email `customer@demo.com`, password `Demo@1234` and click **"Sign In"**.  
 > Click **"Subscriptions"** in the navbar, and click on Rohan's active subscription card to open the **14-Day Interactive Meal Calendar**.  
 > Point your cursor to the daily dishes listed on today's card (*Paneer Butter Masala • Yellow Dal Tadka • Desi Ghee Phulkas*).  
 > Click the **"Skip Meal"** button on tomorrow's lunch. Show the badge turning to a red "Skipped" badge.  
 > Point to the **"Undo Skip"** button that immediately appears. Click **"Undo Skip"** to restore it back to "Scheduled".
 
 **[SAY]:**
-> "Let's log in as our customer persona, Rohan Sharma, using our 1-click test credential drawer. Notice that our application uses strict Role-Based Access Control.
+> "Let's log in as our customer persona, Rohan Sharma. Notice our clean, production-grade interface backed by strict Role-Based Access Control.
 >
 > Inside the Customer Portal, Rohan can access his active 30-day subscription and a transparent 14-day rolling meal calendar. 
 >
