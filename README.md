@@ -1,32 +1,18 @@
-# Thalify: Your daily meals, on your terms.
+# Thalify
 
-> **One-Line Pitch:** An enterprise-grade meal subscription and kitchen prep orchestration platform designed for daily tiffin services and PG messes that eliminates paper notebook disputes through server-authoritative cutoff enforcement, derived billing, real-time WebSocket dispatch, and Razorpay online payments.
-
----
-
-## 📋 End-Term Project Submission Details
-
-| Field | Submission Value |
-| :--- | :--- |
-| **Project Name** | **Thalify** |
-| **Student Name** | **Jay Baid** |
-| **Tagline** | *“Your daily meals, on your terms.”* |
-| **Problem Statement** | Eliminating revenue leakage, food wastage, and billing disputes in informal daily meal & PG mess subscriptions via server-side cutoff enforcement and derived ledgers. |
-| **GitHub Repository** | [https://github.com/jay-0804/Thalify](https://github.com/jay-0804/Thalify) |
-| **Application Type** | Full-Stack Web Application (MERN + WebSockets + Background Schedulers) |
-| **Tech Stack** | React 18, Vite, Tailwind CSS, Node.js, Express.js (ESM), MongoDB Atlas, Socket.io, node-cron, Razorpay SDK, Zod, Jest |
-| **Official Submission Form** | [https://forms.gle/sBy4sfqyiRG2Zpom9](https://forms.gle/sBy4sfqyiRG2Zpom9) |
+> **Your daily meals, on your terms.**  
+> An enterprise-grade meal subscription and kitchen prep orchestration platform designed for daily tiffin services, PG messes, and home kitchens. Eliminates paper notebook disputes through server-authoritative cutoff enforcement, derived billing, real-time WebSocket dispatch, and integrated online payments.
 
 ---
 
 ## 1. Problem Statement & Real-World Domain Analysis
 
-In Indian metropolitan hubs and educational centers—such as Bengaluru, Pune, Kota, Hyderabad, and Gurugram—over **15 million students, young professionals, and PG residents** rely on daily home tiffins and private messes for lunch and dinner. 
+In Indian metropolitan hubs and educational epicenters—such as Bengaluru, Pune, Kota, Hyderabad, and Gurugram—over **15 million students, young professionals, and PG residents** rely on daily home tiffins and private messes for their lunch and dinner. 
 
-Despite being a multi-crore essential services sector, over **90% of tiffin providers operate entirely on manual notebooks, phone calls, and chaotic WhatsApp messages**.
+Despite being a multi-billion-rupee daily essential services economy, over **90% of tiffin providers operate entirely on manual notebooks, phone calls, and chaotic WhatsApp messages**.
 
 ```
-    Traditional Workflow (Status Quo) - Chaotic & Prone to Failure:
+    Traditional Workflow (Status Quo) — Chaotic & Prone to Revenue Loss:
 
   Subscriber                 WhatsApp / Phone Call                Mess Owner Notebook
  ┌──────────┐         "Bhaiya kal tiffin mat bhejna"          ┌─────────────────────────┐
@@ -39,10 +25,10 @@ Despite being a multi-crore essential services sector, over **90% of tiffin prov
                                  "Maine 6 meal skip kiya tha!"     "Khaate mein 2 hi hai"
 ```
 
-### The Three Critical Systemic Failures:
+### The Three Critical Systemic Failures in Daily Tiffin Operations:
 
 1. **The "End-of-Month Notebook War" (Billing Disputes & Revenue Loss):**
-   Subscribers send last-minute WhatsApp messages like *"Bhaiya kal dopahar mat bhejna"*. Kitchen owners, busy cooking, forget to mark the physical diary. When monthly bills are generated, subscribers claim they skipped 8 meals, while the provider recorded only 3. Both parties suffer distrust and revenue loss.
+   Subscribers send last-minute WhatsApp messages like *"Bhaiya kal dopahar mat bhejna"*. Kitchen owners, occupied with cooking or deliveries, forget to update physical registers. At month's end, customers claim they skipped 8 meals, while the provider recorded only 3. Without an immutable, single source of truth, both parties suffer distrust and financial loss.
 
 2. **Kitchen Overcooking & Raw Material Wastage (15–20% Ingredient Loss):**
    Messes must purchase fresh vegetables, dairy, and grains at 6:00 AM wholesale markets. Without an automated aggregation system, chefs cook based on guesswork. When subscribers skip without timely notice, expensive cooked food is thrown away.
@@ -52,33 +38,23 @@ Despite being a multi-crore essential services sector, over **90% of tiffin prov
 
 ---
 
-## 2. Target Users & Personas
+## 2. Market Gap & Product Philosophy
 
-| Role | User Persona | Core Daily Needs & Pain Points |
-| :--- | :--- | :--- |
-| **Customer** | **Rohan Sharma** (24, Software Engineer living in a PG in Koramangala) | • Needs reliable home-style meals without cooking.<br>• Wants the freedom to skip lunch or dinner when dining out with coworkers.<br>• Requires an itemized monthly bill that credits every skipped rupee automatically.<br>• Demands fair cutoff times (5:00 PM IST) with an option to undo accidental skips. |
-| **Kitchen Owner** | **Sunita Sharma** (Owner of *Maa Ki Rasoi*, serving 120 daily thalis) | • Needs tomorrow's guaranteed headcount categorized by diet (Veg vs. Non-Veg) before morning grocery shopping.<br>• Requires a printable Kitchen Order Ticket (KOT) for the cooking staff.<br>• Needs real-time skip notifications so she never over-prepares.<br>• Wants seamless collection management with Razorpay payment tracking. |
-| **Delivery Rider** | **Ramesh Kumar** (Delivery staff managing Koramangala & HSR sectors) | • Needs a simple mobile-friendly checklist sorted by delivery sector.<br>• Requires 1-click status buttons ("Delivered" vs. "Failed").<br>• Must log verified failure reasons (`customer_unavailable` vs. `kitchen_fault`) to prevent disputes. |
-
----
-
-## 3. Market Gap & Competitive Analysis
-
-| Solution | What It Does Well | What It Lacks for Daily Tiffins | Why Thalify Wins |
+| Solution Category | What It Does Well | What It Lacks for Daily Tiffins | Why Thalify Wins |
 | :--- | :--- | :--- | :--- |
-| **Swiggy / Zomato** | Instant on-demand food ordering, live GPS delivery map | 25–35% commission makes daily ₹80–₹120 thalis economically impossible; no calendar-based subscription pausing. | **Zero commission platform** built specifically for recurring meal subscribers and owned kitchen customer bases. |
-| **WhatsApp + Diary** | Zero learning curve; universally adopted | Zero cutoff enforcement; late-night disputes; no headcount forecasting; no audit trail. | **Server-authoritative 5:00 PM cutoff** and tamper-proof digital ledger. |
+| **On-Demand Delivery (Swiggy / Zomato)** | Fast one-off ordering, live GPS delivery map | 25–35% commission makes daily ₹80–₹120 thalis economically impossible; no calendar-based subscription pausing. | **Zero-commission platform** built specifically for recurring meal subscribers and owned kitchen customer bases. |
+| **Status Quo (WhatsApp + Paper Diaries)** | Zero learning curve; universally adopted | Zero cutoff enforcement; late-night disputes; no headcount forecasting; no audit trail. | **Server-authoritative 5:00 PM cutoff** and tamper-proof digital ledger. |
 | **Generic Invoicing (Vyapar / Khatabook)** | General ledger balance tracking and PDF receipts | Not meal-schedule aware; cannot aggregate daily kitchen prep headcounts; zero delivery workflow. | **End-to-end operational integration** connecting ordering, cooking, delivery, and payments. |
 
 ---
 
-## 4. Key Features & Core Workflows
+## 3. Key Product Features & Workflows
 
-### 👤 1. Customer Subscription & Calendar Portal
-- **Interactive 3D Brass Thali Showcase:** Interactive 3D brass thali preview displaying authentic regional bowls (Dal Makhani, Shahi Paneer, Phulkas, Basmati Rice, Gulab Jamun).
-- **Curated Kitchen Exploration:** Filter 8 verified home kitchens across Koramangala, HSR Layout, Whitefield, BTM Layout, and Jayanagar with cuisine tags.
-- **14-Day Rolling Meal Calendar:** View daily meals with dish descriptions (*e.g., Paneer Butter Masala • Yellow Dal Tadka • Desi Ghee Phulkas*).
-- **Cutoff-Enforced Skip & Undo (BR-4):** Skip any meal before 5:00 PM IST with 1-click credits. Undo any skip before 5:00 PM; strictly locked with `409 CUTOFF_PASSED` after 5:00 PM.
+### 👤 1. Customer Subscription & Meal Calendar
+- **Interactive 3D Brass Thali Showcase:** Interactive 3D brass thali preview displaying authentic regional dishes (Dal Makhani, Shahi Paneer, Phulkas, Basmati Rice, Gulab Jamun).
+- **Curated Kitchen Exploration:** Browse and filter verified home kitchens across Koramangala, HSR Layout, Whitefield, BTM Layout, and Jayanagar with cuisine tags (North Indian, South Indian, Pure Jain & Satvik, High-Protein Gym Fuel).
+- **14-Day Rolling Meal Calendar:** View daily meals with dish breakdowns (*e.g., Paneer Butter Masala • Yellow Dal Tadka • Desi Ghee Phulkas*).
+- **Cutoff-Enforced Skip & Undo (BR-4):** Skip any upcoming meal before 5:00 PM IST with 1-click credits. Undo any skip before 5:00 PM; strictly locked with `409 CUTOFF_PASSED` after 5:00 PM.
 - **Vacation Mode (Pause / Resume):** Bulk-pause up to 30 days of upcoming meals without manual daily toggling.
 - **Integrated Razorpay Payments:** Clear outstanding balances with live UPI/Card checkout, overpayment prevention guards, and instant receipts.
 
@@ -97,7 +73,7 @@ Despite being a multi-crore essential services sector, over **90% of tiffin prov
 
 ---
 
-## 5. Technical Architecture & System Design
+## 4. Technical Architecture & System Design
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
@@ -154,7 +130,7 @@ Despite being a multi-crore essential services sector, over **90% of tiffin prov
 
 ---
 
-## 6. Deep-Dive Engineering Decisions
+## 5. Core Engineering Decisions
 
 ### 1. Server-Authoritative Cutoff Enforcement (BR-4)
 - **The Pitfall:** Validating meal cancellation deadlines on the client device allows users to bypass rules by altering device clocks or submitting recorded API packets.
@@ -189,11 +165,11 @@ Despite being a multi-crore essential services sector, over **90% of tiffin prov
 - When a `MealInstance` is generated, it captures `plan.pricePerMeal` into `mealInstance.price`. Future price updates by the kitchen never retroactively alter past bills.
 
 ### 5. Dual-Engine Persistence Resilience
-- In the event that cloud network IP whitelisting restricts MongoDB Atlas, the backend automatically boots a high-performance local MongoDB memory engine and seeds all 8 kitchens, rotating menus, and demo accounts so the application **never crashes or blocks evaluators**.
+- In the event that cloud network IP whitelisting restricts MongoDB Atlas, the backend automatically boots a high-performance local MongoDB memory engine and seeds all 8 kitchens, rotating menus, and accounts so the application **never crashes or blocks users**.
 
 ---
 
-## 7. Role-Based Access Control (RBAC) Matrix
+## 6. Role-Based Access Control (RBAC) Matrix
 
 | Endpoint Route | Customer | Kitchen Owner (Provider) | Delivery Staff | Public |
 | :--- | :---: | :---: | :---: | :---: |
@@ -209,7 +185,7 @@ Despite being a multi-crore essential services sector, over **90% of tiffin prov
 
 ---
 
-## 8. Local Setup & Quick Start
+## 7. Local Setup & Quick Start
 
 ### Prerequisites
 - Node.js >= v18.0.0
@@ -232,7 +208,7 @@ cd ../client
 npm install
 ```
 
-### 3. Environment Variables
+### 3. Configure Environment Variables
 
 **Server Configuration (`server/.env`):**
 ```env
@@ -270,24 +246,7 @@ Open your browser at: **`http://localhost:5173`**
 
 ---
 
-## 9. Demo Credentials Drawer
-
-All test accounts share the password: `Demo@1234`
-
-| Role | Email | Password | Kitchen / Persona | Focus & Persona Details |
-| :--- | :--- | :--- | :--- | :--- |
-| **Customer** | `customer@demo.com` | `Demo@1234` | Rohan Sharma | Active 30-day subscription, daily dish view, 5 PM skip/undo, Razorpay payment |
-| **Kitchen 1** | `provider@demo.com` | `Demo@1234` | Maa Ki Rasoi (North Indian) | Live skip notifications, KOT printing, customer broadcast |
-| **Kitchen 2** | `annapurna@demo.com` | `Demo@1234` | Annapurna Homely Mess (South Indian) | Traditional Tamil/Andhra thali plans & prep sheet |
-| **Kitchen 3** | `campus@demo.com` | `Demo@1234` | Campus Mess Co (Whitefield) | Student budget meal packages & delivery dispatch |
-| **Kitchen 4** | `satvik@demo.com` | `Demo@1234` | Shuddh Satvik Rasoi (HSR Layout) | Pure Jain & Satvik meal scheduling |
-| **Delivery** | `delivery@demo.com` | `Demo@1234` | Ramesh Kumar | Assigned Koramangala drops, Delivered/Failed 1-click toggles |
-
-> 💡 **Evaluator Note:** For grading and testing, use the pre-configured credentials in the table above to evaluate each distinct persona (Customer, Kitchen Owner, Delivery Staff). All accounts are pre-seeded in the database with active subscriptions and delivery routes.
-
----
-
-## 10. Automated Acceptance Test Suite (18/18 Passing)
+## 8. Automated Acceptance Test Suite (18/18 Passing)
 
 Thalify includes an automated acceptance test suite in `server/tests/acceptance.test.js`:
 
@@ -296,7 +255,7 @@ cd server
 npm test
 ```
 
-### Test Coverage Breakdown:
+### Verified Test Cases:
 1. `AUTH-01`: Public registration restricts role escalation to delivery staff (`400 VALIDATION_ERROR`)
 2. `AUTH-02`: Duplicate email registration returns `409 EMAIL_EXISTS`
 3. `SUB-01`: Cross-user subscription access returns `403 FORBIDDEN`
@@ -315,35 +274,3 @@ npm test
 16. `BILL-01`: Monthly bill math matches itemized line items exactly
 17. `BILL-02`: Overpayment returns `409 OVERPAYMENT`
 18. `PAY-01`: Razorpay order generation and verification updates balance accurately
-
----
-
-## 11. Deployment Instructions
-
-### Backend (Render / Railway / VPS)
-1. Set up a Web Service pointing to repository root directory `/server`.
-2. Build Command: `npm install`
-3. Start Command: `node src/server.js`
-4. Configure Environment Variables: `MONGODB_URI`, `JWT_SECRET`, `CLIENT_URL`, `TZ=Asia/Kolkata`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`.
-
-### Frontend (Vercel / Netlify)
-1. Set up a static deployment pointing to directory `/client`.
-2. Build Command: `npm run build`
-3. Output Directory: `dist`
-4. Configure Environment Variables: `VITE_API_URL` and `VITE_SOCKET_URL`.
-5. Pre-configured `vercel.json` rewrite handles single-page application (SPA) client-side routing.
-
----
-
-## 12. Final Submission Checklist
-
-- [x] Functional software application with complete frontend, backend, and persistence
-- [x] Problem statement & target users clearly defined
-- [x] Core user workflows fully operational (subscription, meal skipping, undo, billing, dispatch)
-- [x] Meaningful server-side business logic (5:00 PM cutoff, derived ledger, prep aggregator)
-- [x] Edge-case error handling (overpayment guards, state locking, authentication barriers)
-- [x] Zero exposed secrets (`.env` gitignored, only `.env.example` committed)
-- [x] Clean Git repository with descriptive development history
-- [x] Architectural documentation and local setup guide
-- [x] Comprehensive video demonstration script (`DEMO_SCRIPT.md`)
-- [x] 18/18 passing automated acceptance tests
