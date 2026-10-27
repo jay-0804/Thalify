@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../../api/axios.js';
 import { useAuth } from '../../context/AuthContext.jsx';
@@ -11,6 +11,7 @@ import {
   Calendar,
   CheckCircle2,
   Utensils,
+  ChevronLeft,
   ChevronRight,
   ShieldAlert,
 } from 'lucide-react';
@@ -24,6 +25,7 @@ export const ProviderDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedMenuDate, setSelectedMenuDate] = useState(null);
 
   // Subscribe Modal State
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -117,6 +119,38 @@ export const ProviderDetail = () => {
 
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  const groupedMenu = useMemo(() => {
+    if (!menu || !menu.length) return [];
+    const map = {};
+    menu.forEach((item) => {
+      if (!map[item.date]) {
+        map[item.date] = {
+          date: item.date,
+          lunch: null,
+          dinner: null,
+        };
+      }
+      if (item.mealType === 'lunch') {
+        map[item.date].lunch = item.dishes;
+      } else if (item.mealType === 'dinner') {
+        map[item.date].dinner = item.dishes;
+      }
+    });
+
+    return Object.values(map).sort((a, b) => a.date.localeCompare(b.date));
+  }, [menu]);
+
+  const activeDateData = useMemo(() => {
+    if (!groupedMenu.length) return null;
+    if (selectedMenuDate) {
+      const found = groupedMenu.find((d) => d.date === selectedMenuDate);
+      if (found) return found;
+    }
+    const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+    const todayItem = groupedMenu.find((d) => d.date === todayStr);
+    return todayItem || groupedMenu[0];
+  }, [groupedMenu, selectedMenuDate]);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Provider Header Card */}
@@ -208,43 +242,163 @@ export const ProviderDetail = () => {
         </div>
       </div>
 
-      {/* 7-Day Rolling Menu Preview */}
-      <div className="bg-white rounded-3xl border border-mocha-200/80 p-6 sm:p-8 shadow-xs space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-serif font-bold text-mocha-950 flex items-center space-x-2">
-            <Utensils className="w-5 h-5 text-amber-600" />
-            <span>Next 7 Days Menu Preview</span>
-          </h2>
-          <span className="text-xs text-gold-700 font-semibold">
+      {/* 7-Day Revolving Daily Menu Explorer (One Day at a Time in a Dedicated Box) */}
+      <div className="bg-white rounded-3xl border border-mocha-200/80 p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-mocha-100 pb-4">
+          <div>
+            <h2 className="text-xl font-serif font-bold text-mocha-950 flex items-center space-x-2">
+              <Utensils className="w-5 h-5 text-amber-600" />
+              <span>7-Day Revolving Menu Schedule</span>
+            </h2>
+            <p className="text-xs text-mocha-500 mt-0.5">
+              Select a date below to view the freshly cooked lunch & dinner menu for that day
+            </p>
+          </div>
+          <span className="text-xs font-semibold px-3 py-1 bg-gold-50 text-gold-900 border border-gold-200 rounded-full w-fit">
             Rotated weekly with seasonal vegetables
           </span>
         </div>
 
-        {menu.length === 0 ? (
-          <p className="text-sm text-mocha-500 py-4">Menu updating for upcoming days...</p>
+        {groupedMenu.length === 0 ? (
+          <p className="text-sm text-mocha-500 py-6 text-center">Menu updating for upcoming days...</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {menu.map((item) => (
-              <div
-                key={item._id}
-                className="p-4 rounded-xl bg-canvas-subtle/60 border border-mocha-200/60 space-y-2"
-              >
-                <div className="flex items-center justify-between text-xs font-bold text-mocha-900">
-                  <span>{item.date}</span>
-                  <span className="capitalize text-amber-700 bg-amber-100/60 px-2 py-0.5 rounded text-[10px]">
-                    {item.mealType}
-                  </span>
+          <div className="space-y-5">
+            {/* Day Selector Pills Bar */}
+            <div className="flex items-center space-x-2.5 overflow-x-auto pb-2 scrollbar-thin">
+              {groupedMenu.map((dayGroup) => {
+                const isSelected = activeDateData?.date === dayGroup.date;
+                const [y, m, d] = dayGroup.date.split('-').map(Number);
+                const dateObj = new Date(y, m - 1, d);
+                const dayName = dateObj.toLocaleDateString('en-IN', { weekday: 'short' });
+                const dayNum = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+                const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+                const isToday = dayGroup.date === todayStr;
+
+                return (
+                  <button
+                    key={dayGroup.date}
+                    type="button"
+                    onClick={() => setSelectedMenuDate(dayGroup.date)}
+                    className={`shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold transition-smooth flex flex-col items-center justify-center min-w-[90px] border cursor-pointer ${
+                      isSelected
+                        ? 'bg-amber-600 text-white border-amber-600 shadow-md scale-105'
+                        : 'bg-canvas-subtle/80 text-mocha-700 border-mocha-200 hover:bg-gold-50 hover:border-gold-300'
+                    }`}
+                  >
+                    <span className="text-[10px] uppercase tracking-wider opacity-90">
+                      {isToday ? 'Today' : dayName}
+                    </span>
+                    <span className="text-xs font-extrabold">{dayNum}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Focused Single-Day Box */}
+            {activeDateData && (
+              <div className="p-6 rounded-3xl bg-canvas-subtle/80 border border-mocha-200/90 shadow-2xs space-y-5">
+                {/* Day Header with Pagination */}
+                <div className="flex items-center justify-between pb-3 border-b border-mocha-200/70">
+                  <div>
+                    <span className="text-[10px] uppercase font-bold text-amber-700 tracking-wider">
+                      {activeDateData.date === new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' })
+                        ? "Today's Fresh Cook"
+                        : 'Scheduled Day Menu'}
+                    </span>
+                    <h3 className="text-lg font-serif font-extrabold text-mocha-950">
+                      {(() => {
+                        const [y, m, d] = activeDateData.date.split('-').map(Number);
+                        return new Date(y, m - 1, d).toLocaleDateString('en-IN', {
+                          weekday: 'long',
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        });
+                      })()}
+                    </h3>
+                  </div>
+
+                  {/* Day Navigation Chevrons */}
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      disabled={groupedMenu.findIndex((d) => d.date === activeDateData.date) === 0}
+                      onClick={() => {
+                        const currIdx = groupedMenu.findIndex((d) => d.date === activeDateData.date);
+                        if (currIdx > 0) setSelectedMenuDate(groupedMenu[currIdx - 1].date);
+                      }}
+                      className="p-2 rounded-xl border border-mocha-200 bg-white hover:bg-mocha-50 disabled:opacity-30 disabled:cursor-not-allowed transition-smooth shadow-2xs cursor-pointer"
+                      title="Previous Day"
+                    >
+                      <ChevronLeft className="w-4 h-4 text-mocha-700" />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={
+                        groupedMenu.findIndex((d) => d.date === activeDateData.date) === groupedMenu.length - 1
+                      }
+                      onClick={() => {
+                        const currIdx = groupedMenu.findIndex((d) => d.date === activeDateData.date);
+                        if (currIdx < groupedMenu.length - 1) setSelectedMenuDate(groupedMenu[currIdx + 1].date);
+                      }}
+                      className="p-2 rounded-xl border border-mocha-200 bg-white hover:bg-mocha-50 disabled:opacity-30 disabled:cursor-not-allowed transition-smooth shadow-2xs cursor-pointer"
+                      title="Next Day"
+                    >
+                      <ChevronRight className="w-4 h-4 text-mocha-700" />
+                    </button>
+                  </div>
                 </div>
-                <ul className="text-xs text-mocha-700 space-y-1 pt-1">
-                  {item.dishes.map((dish, i) => (
-                    <li key={i} className="flex items-center space-x-1.5">
-                      <span className="w-1 h-1 rounded-full bg-amber-600"></span>
-                      <span>{dish}</span>
-                    </li>
-                  ))}
-                </ul>
+
+                {/* Lunch & Dinner Services for this Date */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  {/* Lunch Service Box */}
+                  <div className="p-5 bg-white rounded-2xl border border-amber-200/90 shadow-xs space-y-3">
+                    <div className="flex items-center justify-between pb-2 border-b border-amber-100">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-100/80 text-amber-900">
+                        ☀️ Lunch Service
+                      </span>
+                      <span className="text-[11px] text-mocha-500 font-medium">12:30 PM – 2:30 PM</span>
+                    </div>
+
+                    {activeDateData.lunch && activeDateData.lunch.length > 0 ? (
+                      <ul className="space-y-2 pt-1 text-xs sm:text-sm text-mocha-800">
+                        {activeDateData.lunch.map((dish, i) => (
+                          <li key={i} className="flex items-start space-x-2">
+                            <span className="text-amber-600 font-bold mt-0.5">•</span>
+                            <span className="font-medium">{dish}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-xs text-mocha-400 italic py-4">No lunch items scheduled for this date.</p>
+                    )}
+                  </div>
+
+                  {/* Dinner Service Box */}
+                  <div className="p-5 bg-white rounded-2xl border border-gold-300/80 shadow-xs space-y-3">
+                    <div className="flex items-center justify-between pb-2 border-b border-gold-100">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-gold-100/80 text-gold-900">
+                        🌙 Dinner Service
+                      </span>
+                      <span className="text-[11px] text-mocha-500 font-medium">7:30 PM – 9:30 PM</span>
+                    </div>
+
+                    {activeDateData.dinner && activeDateData.dinner.length > 0 ? (
+                      <ul className="space-y-2 pt-1 text-xs sm:text-sm text-mocha-800">
+                        {activeDateData.dinner.map((dish, i) => (
+                          <li key={i} className="flex items-start space-x-2">
+                            <span className="text-gold-600 font-bold mt-0.5">•</span>
+                            <span className="font-medium">{dish}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-xs text-mocha-400 italic py-4">No dinner items scheduled for this date.</p>
+                    )}
+                  </div>
+                </div>
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import api from '../../api/axios.js';
 import { Loader } from '../../components/Loader.jsx';
 import { ErrorBanner } from '../../components/ErrorBanner.jsx';
@@ -138,6 +138,19 @@ export const Menu = () => {
       prev.includes(dayIndex) ? prev.filter((d) => d !== dayIndex) : [...prev, dayIndex].sort()
     );
   };
+
+  const groupedMenuItems = useMemo(() => {
+    if (!menuItems || !menuItems.length) return [];
+    const map = {};
+    menuItems.forEach((item) => {
+      if (!map[item.date]) {
+        map[item.date] = { date: item.date, lunch: null, dinner: null };
+      }
+      if (item.mealType === 'lunch') map[item.date].lunch = item.dishes;
+      if (item.mealType === 'dinner') map[item.date].dinner = item.dishes;
+    });
+    return Object.values(map).sort((a, b) => a.date.localeCompare(b.date));
+  }, [menuItems]);
 
   if (loading) return <Loader message="Loading plans and menus..." />;
   if (error) return <ErrorBanner message={error} onRetry={fetchData} />;
@@ -282,24 +295,67 @@ export const Menu = () => {
           </div>
         </form>
 
-        {/* Existing Menu List Preview */}
-        <div className="pt-4 border-t border-mocha-100">
-          <h3 className="text-sm font-serif font-bold text-mocha-950 mb-3">Saved Menu Schedule</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {menuItems.map((item) => (
-              <div
-                key={item._id}
-                className="p-3.5 bg-canvas-subtle/70 rounded-xl border border-mocha-200/80 text-xs space-y-1.5"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-mocha-900">{item.date}</span>
-                  <span className="capitalize font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded text-[10px]">
-                    {item.mealType}
-                  </span>
+        {/* Existing Menu List Preview (Grouped by Day) */}
+        <div className="pt-4 border-t border-mocha-100 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-serif font-bold text-mocha-950">
+              Active Daily Menu Schedule (Organized by Day)
+            </h3>
+            <span className="text-[11px] text-mocha-500 font-medium">
+              Showing Lunch & Dinner together per day
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {groupedMenuItems.map((dayGroup) => {
+              const [y, m, d] = dayGroup.date.split('-').map(Number);
+              const dateObj = new Date(y, m - 1, d);
+              const formattedDate = dateObj.toLocaleDateString('en-IN', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+              });
+
+              return (
+                <div
+                  key={dayGroup.date}
+                  className="p-4 bg-canvas-subtle/80 rounded-2xl border border-mocha-200/90 text-xs space-y-3 shadow-2xs"
+                >
+                  <div className="flex items-center justify-between pb-2 border-b border-mocha-200/60">
+                    <span className="font-bold text-mocha-950 text-sm">{formattedDate}</span>
+                    <span className="text-[10px] text-mocha-500 font-mono">{dayGroup.date}</span>
+                  </div>
+
+                  {/* Lunch Details */}
+                  <div className="space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-amber-800 bg-amber-100/70 px-1.5 py-0.5 rounded">
+                      ☀️ Lunch
+                    </span>
+                    <p className="text-mocha-800 font-medium pt-0.5 pl-1 leading-relaxed">
+                      {dayGroup.lunch ? (
+                        dayGroup.lunch.join(' • ')
+                      ) : (
+                        <span className="text-mocha-400 italic">No lunch set</span>
+                      )}
+                    </p>
+                  </div>
+
+                  {/* Dinner Details */}
+                  <div className="space-y-1 pt-1 border-t border-mocha-100">
+                    <span className="text-[10px] uppercase font-bold text-gold-900 bg-gold-100/70 px-1.5 py-0.5 rounded">
+                      🌙 Dinner
+                    </span>
+                    <p className="text-mocha-800 font-medium pt-0.5 pl-1 leading-relaxed">
+                      {dayGroup.dinner ? (
+                        dayGroup.dinner.join(' • ')
+                      ) : (
+                        <span className="text-mocha-400 italic">No dinner set</span>
+                      )}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-mocha-600">{item.dishes.join(' • ')}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
